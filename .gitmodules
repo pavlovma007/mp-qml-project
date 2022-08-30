@@ -20,3 +20,6 @@
 [submodule "lib/mauikit"]
 	path = lib/mauikit
 	url = https://invent.kde.org/maui/mauikit.git
+[submodule "lib/qsyncable"]
+	path = lib/qsyncable
+	url = git@github.com:pavlovma007/qsyncable.git
