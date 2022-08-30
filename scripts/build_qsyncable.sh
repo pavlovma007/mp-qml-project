@@ -8,7 +8,7 @@ cmake  ../../lib/qsyncable
 make 
 
 # remove all except target lib
-rm -rf `find .  ! -name "libqsyncable.so"`
+rm -rf `find .  ! -name "libqsyncable.so"    ! -name "." ! -name ".." `
 
 
 
