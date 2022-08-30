@@ -7,5 +7,5 @@ cd build/industrial-controls
 cmake  ../../lib/industrial-controls
 make 
 
-rm -rf  !(libindustrial_controls.so)
-cp ../../lib/industrial-controls/example/result/example ./
+rm -rf `find .  ! -name "libindustrial_controls.so"`
+cp ./libindustrial_controls.so  ../../lib/industrial-controls/
