@@ -6,7 +6,33 @@ import QMLExif 1.0
 
 import QSyncable 1.0
 
+import QtMultimedia 5.12
+
+
 Item {
+
+	// video play 
+	Video {
+		id: video
+		width : 800
+		height : 600
+		source: "/home/mp/Видео/работа. борьба с зависаниями-2022-08-24_16.34.12.mp4"
+
+		MouseArea {
+			anchors.fill: parent
+			onClicked: {
+				video.play()
+			}
+		}
+
+		focus: true
+		Keys.onSpacePressed: video.playbackState == MediaPlayer.PlayingState ? video.pause() : video.play()
+		Keys.onLeftPressed: video.seek(video.position - 5000)
+		Keys.onRightPressed: video.seek(video.position + 5000)
+	}
+
+
+
 
 	// QSYNCABLE PLUGIN 
 //    JsonListModel {
