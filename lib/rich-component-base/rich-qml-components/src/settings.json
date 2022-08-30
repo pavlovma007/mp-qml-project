@@ -1,0 +1,85 @@
+{
+    "main_view": "src/mainview.qml",
+    "full_screen": false,
+    "hide_cursor": false,
+    "enable_ack": false,
+    "enable_heartbeat": false,
+    "heartbeat_interval": 0,
+    "screensaver_timeout": 0,
+    "screen_original_brigtness": 7,
+    "screen_dim_brigtness": 5,
+    "translate_file": "src/translate.txt",
+
+    "serial_port_servers": [
+        {
+            "port_name": "J2_232",
+            "physical_port": "J2",
+            "win_port": "COM5",
+			"linux_vm_port": "/dev/USB0",
+            "linux_target_port": "/dev/ttymxc1",
+            "enabled": true,
+            "baud_rate": 115200,
+            "stop_bits": 1,
+            "data_bits": 8,
+            "parity": "none",
+            "flow_control": "off",
+            "parse_json": false,
+            "translate": true,
+            "translate_id": "M",
+            "primary_connection": true
+        },
+        {
+            "port_name": "J25_485",
+            "physical_port": "J25",
+            "win_port": "COM4",
+			"linux_vm_port": "/dev/USB1",
+            "linux_target_port": "/dev/ttymxc2",
+            "enabled": false,
+            "baud_rate": 115200,
+            "stop_bits": 1,
+            "data_bits": 8,
+            "parity": "none",
+            "flow_control": "off",
+            "parse_json": false,
+            "translate": true,
+            "translate_id": "M1",
+            "primary_connection": false
+        },
+        {
+            "port_name": "J21_I2C",
+            "physical_port": "J21",
+            "win_port": "COM3",
+			"linux_vm_port": "/dev/USB2",
+            "linux_target_port": "/dev/ttymxc3",
+            "enabled": false,
+            "baud_rate": 115200,
+            "stop_bits": 0,
+            "data_bits" : 8,
+            "parity": "none",
+            "flow_control": "off",
+            "parse_json": false,
+            "translate": true,
+            "translate_id": "M2",
+            "primary_connection": false
+       }
+    ],
+
+    "tcp_servers": [{
+            "port": 4000,
+            "parse_json": false,
+            "translate": true,
+            "translate_id": "M3",
+            "primary_connection": false,
+			"enabled": false
+        },
+		{
+            "port": 3000,
+            "parse_json": false,
+            "translate": false,
+            "translate_id": "M4",
+            "primary_connection": false,
+			"enabled": false
+        }
+		]
+
+}

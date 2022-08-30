@@ -1,0 +1,4 @@
+# default messages
+# these are used if there is not match
+M:%s,T:txtDebug.text=%s
+G:%s,T:%s

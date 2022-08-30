@@ -1,0 +1,354 @@
+import QtQuick.tooling 1.1
+
+// This file describes the plugin-supplied types contained in the library.
+// It is used for QML tooling purposes only.
+
+Module {
+    Component {
+        name: "Canvas"
+        defaultProperty: "data"
+        prototype: "QDeclarativeItem"
+        exports: [
+            "Canvas 1.0"
+        ]
+        Enum {
+            name: "FillMode"
+            values: {
+                "Stretch": 0,
+                "PreserveAspectFit": 1,
+                "PreserveAspectCrop": 2,
+                "Tile": 3,
+                "TileVertically": 4,
+                "TileHorizontally": 5
+            }
+        }
+        Property { name: "color"; type: "QColor" }
+        Property { name: "canvasWidth"; type: "int" }
+        Property { name: "canvasHeight"; type: "int" }
+        Property { name: "fillMode"; type: "FillMode" }
+        Signal { name: "fillModeChanged" }
+        Signal { name: "canvasWidthChanged" }
+        Signal { name: "canvasHeightChanged" }
+        Signal { name: "colorChanged" }
+        Signal { name: "init" }
+        Signal { name: "paint" }
+        Method {
+            name: "getContext"
+            type: "Context2D*"
+            Parameter { type: "string" }
+        }
+        Method { name: "getContext"; type: "Context2D*" }
+        Method { name: "requestPaint" }
+        Method { name: "fillMode"; type: "FillMode" }
+        Method {
+            name: "setFillMode"
+            Parameter { type: "FillMode" }
+        }
+        Method { name: "color"; type: "QColor" }
+        Method {
+            name: "setColor"
+            Parameter { type: "QColor" }
+        }
+        Method {
+            name: "save"
+            type: "bool"
+            Parameter { name: "filename"; type: "string" }
+        }
+        Method {
+            name: "setInterval"
+            Parameter { name: "handler"; type: "QScriptValue" }
+            Parameter { name: "timeout"; type: "long" }
+        }
+        Method {
+            name: "setTimeout"
+            Parameter { name: "handler"; type: "QScriptValue" }
+            Parameter { name: "timeout"; type: "long" }
+        }
+        Method {
+            name: "clearInterval"
+            Parameter { name: "handler"; type: "QScriptValue" }
+        }
+        Method {
+            name: "clearTimeout"
+            Parameter { name: "handler"; type: "QScriptValue" }
+        }
+    }
+    Component {
+        name: "CanvasGradient"
+        prototype: "QObject"
+        exports: [
+            "Gradient 1.0"
+        ]
+        Method { name: "value"; type: "QGradient" }
+        Method {
+            name: "addColorStop"
+            Parameter { name: "pos"; type: "float" }
+            Parameter { name: "color"; type: "string" }
+        }
+    }
+    Component {
+        name: "CanvasImage"
+        prototype: "QObject"
+        exports: [
+            "CanvasImage 1.0"
+        ]
+        Property { name: "src"; type: "string" }
+        Property { name: "width"; type: "int"; isReadonly: true }
+        Property { name: "height"; type: "int"; isReadonly: true }
+        Signal { name: "sourceChanged" }
+        Method { name: "width"; type: "int" }
+        Method { name: "height"; type: "int" }
+        Method { name: "value" }
+        Method { name: "src"; type: "string" }
+        Method {
+            name: "setSrc"
+            Parameter { name: "src"; type: "string" }
+        }
+    }
+    Component {
+        name: "Context2D"
+        prototype: "QObject"
+        exports: [
+            "Context2D 1.0"
+        ]
+        Property { name: "globalAlpha"; type: "qreal" }
+        Property { name: "globalCompositeOperation"; type: "string" }
+        Property { name: "strokeStyle"; type: "QVariant" }
+        Property { name: "fillStyle"; type: "QVariant" }
+        Property { name: "lineWidth"; type: "qreal" }
+        Property { name: "lineCap"; type: "string" }
+        Property { name: "lineJoin"; type: "string" }
+        Property { name: "miterLimit"; type: "qreal" }
+        Property { name: "shadowOffsetX"; type: "qreal" }
+        Property { name: "shadowOffsetY"; type: "qreal" }
+        Property { name: "shadowBlur"; type: "qreal" }
+        Property { name: "shadowColor"; type: "string" }
+        Property { name: "font"; type: "string" }
+        Property { name: "textBaseline"; type: "string" }
+        Property { name: "textAlign"; type: "string" }
+        Signal { name: "changed" }
+        Method { name: "save" }
+        Method { name: "restore" }
+        Method {
+            name: "fillText"
+            Parameter { name: "text"; type: "string" }
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+        }
+        Method {
+            name: "strokeText"
+            Parameter { name: "text"; type: "string" }
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+        }
+        Method {
+            name: "setInPaint"
+            Parameter { name: "val"; type: "bool" }
+        }
+        Method {
+            name: "scale"
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+        }
+        Method {
+            name: "rotate"
+            Parameter { name: "angle"; type: "qreal" }
+        }
+        Method {
+            name: "translate"
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+        }
+        Method {
+            name: "transform"
+            Parameter { name: "m11"; type: "qreal" }
+            Parameter { name: "m12"; type: "qreal" }
+            Parameter { name: "m21"; type: "qreal" }
+            Parameter { name: "m22"; type: "qreal" }
+            Parameter { name: "dx"; type: "qreal" }
+            Parameter { name: "dy"; type: "qreal" }
+        }
+        Method {
+            name: "setTransform"
+            Parameter { name: "m11"; type: "qreal" }
+            Parameter { name: "m12"; type: "qreal" }
+            Parameter { name: "m21"; type: "qreal" }
+            Parameter { name: "m22"; type: "qreal" }
+            Parameter { name: "dx"; type: "qreal" }
+            Parameter { name: "dy"; type: "qreal" }
+        }
+        Method {
+            name: "createLinearGradient"
+            type: "CanvasGradient*"
+            Parameter { name: "x0"; type: "qreal" }
+            Parameter { name: "y0"; type: "qreal" }
+            Parameter { name: "x1"; type: "qreal" }
+            Parameter { name: "y1"; type: "qreal" }
+        }
+        Method {
+            name: "createRadialGradient"
+            type: "CanvasGradient*"
+            Parameter { name: "x0"; type: "qreal" }
+            Parameter { name: "y0"; type: "qreal" }
+            Parameter { name: "r0"; type: "qreal" }
+            Parameter { name: "x1"; type: "qreal" }
+            Parameter { name: "y1"; type: "qreal" }
+            Parameter { name: "r1"; type: "qreal" }
+        }
+        Method {
+            name: "clearRect"
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+            Parameter { name: "w"; type: "qreal" }
+            Parameter { name: "h"; type: "qreal" }
+        }
+        Method {
+            name: "fillRect"
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+            Parameter { name: "w"; type: "qreal" }
+            Parameter { name: "h"; type: "qreal" }
+        }
+        Method {
+            name: "strokeRect"
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+            Parameter { name: "w"; type: "qreal" }
+            Parameter { name: "h"; type: "qreal" }
+        }
+        Method { name: "beginPath" }
+        Method { name: "closePath" }
+        Method {
+            name: "moveTo"
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+        }
+        Method {
+            name: "lineTo"
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+        }
+        Method {
+            name: "quadraticCurveTo"
+            Parameter { name: "cpx"; type: "qreal" }
+            Parameter { name: "cpy"; type: "qreal" }
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+        }
+        Method {
+            name: "bezierCurveTo"
+            Parameter { name: "cp1x"; type: "qreal" }
+            Parameter { name: "cp1y"; type: "qreal" }
+            Parameter { name: "cp2x"; type: "qreal" }
+            Parameter { name: "cp2y"; type: "qreal" }
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+        }
+        Method {
+            name: "arcTo"
+            Parameter { name: "x1"; type: "qreal" }
+            Parameter { name: "y1"; type: "qreal" }
+            Parameter { name: "x2"; type: "qreal" }
+            Parameter { name: "y2"; type: "qreal" }
+            Parameter { name: "radius"; type: "qreal" }
+        }
+        Method {
+            name: "rect"
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+            Parameter { name: "w"; type: "qreal" }
+            Parameter { name: "h"; type: "qreal" }
+        }
+        Method {
+            name: "arc"
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+            Parameter { name: "radius"; type: "qreal" }
+            Parameter { name: "startAngle"; type: "qreal" }
+            Parameter { name: "endAngle"; type: "qreal" }
+            Parameter { name: "anticlockwise"; type: "bool" }
+        }
+        Method { name: "fill" }
+        Method { name: "stroke" }
+        Method { name: "clip" }
+        Method {
+            name: "isPointInPath"
+            type: "bool"
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+        }
+        Method {
+            name: "createImage"
+            type: "CanvasImage*"
+            Parameter { name: "url"; type: "string" }
+        }
+        Method {
+            name: "measureText"
+            type: "int"
+            Parameter { name: "text"; type: "string" }
+        }
+        Method {
+            name: "drawImage"
+            Parameter { name: "var"; type: "QVariant" }
+            Parameter { name: "dx"; type: "qreal" }
+            Parameter { name: "dy"; type: "qreal" }
+            Parameter { name: "dw"; type: "qreal" }
+            Parameter { name: "dh"; type: "qreal" }
+        }
+        Method {
+            name: "moveCanvasImage"
+            Parameter { name: "sx"; type: "qreal" }
+            Parameter { name: "sy"; type: "qreal" }
+            Parameter { name: "sw"; type: "qreal" }
+            Parameter { name: "sh"; type: "qreal" }
+            Parameter { name: "dx"; type: "qreal" }
+            Parameter { name: "dy"; type: "qreal" }
+        }
+        Method {
+            name: "drawWaveFormLine"
+            Parameter { name: "sx"; type: "qreal" }
+            Parameter { name: "sy"; type: "qreal" }
+            Parameter { name: "sw"; type: "qreal" }
+            Parameter { name: "sh"; type: "qreal" }
+            Parameter { name: "dx"; type: "qreal" }
+            Parameter { name: "dy"; type: "qreal" }
+            Parameter { name: "bgColor"; type: "string" }
+            Parameter { name: "x"; type: "qreal" }
+            Parameter { name: "y"; type: "qreal" }
+            Parameter { name: "w"; type: "qreal" }
+            Parameter { name: "h"; type: "qreal" }
+            Parameter { name: "lineColor"; type: "string" }
+            Parameter { name: "lineWidth"; type: "qreal" }
+            Parameter { name: "x1"; type: "qreal" }
+            Parameter { name: "y1"; type: "qreal" }
+            Parameter { name: "x2"; type: "qreal" }
+            Parameter { name: "y2"; type: "qreal" }
+            Parameter { name: "drawBlock"; type: "bool" }
+        }
+        Method {
+            name: "getImageData"
+            type: "QVariantList"
+            Parameter { name: "sx"; type: "qreal" }
+            Parameter { name: "sy"; type: "qreal" }
+            Parameter { name: "sw"; type: "qreal" }
+            Parameter { name: "sh"; type: "qreal" }
+        }
+        Method {
+            name: "putImageData"
+            Parameter { name: "image"; type: "QVariantList" }
+            Parameter { name: "dx"; type: "qreal" }
+            Parameter { name: "dy"; type: "qreal" }
+        }
+        Method {
+            name: "createHeatMap"
+            Parameter { name: "sx"; type: "qreal" }
+            Parameter { name: "sy"; type: "qreal" }
+            Parameter { name: "sw"; type: "qreal" }
+            Parameter { name: "sh"; type: "qreal" }
+            Parameter { name: "dx"; type: "qreal" }
+            Parameter { name: "dy"; type: "qreal" }
+        }
+        Method { name: "endPainting" }
+    }
+}
+

@@ -1,0 +1,4 @@
+plugin systemplugin ../../plugins
+typeinfo ../../plugins/canvasplugin.qmltypes
+
+

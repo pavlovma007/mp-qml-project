@@ -1,0 +1,727 @@
+MetaInfo {
+
+Type {
+        name: "Switch"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Switch"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 60; }
+            Property { name: "height"; type: "int"; value: 40; }
+            Property { name: "imageOff"; type: "QUrl"; value: "images/internal_button_up.bmp"; }
+            Property { name: "imageOn"; type: "QUrl"; value: "images/internal_button_dn.bmp"; }
+            Property { name: "textOff"; type: "QString"; value: "Off"; }
+            Property { name: "textOffFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "textOffBold"; type: "bool"; value: false; }
+            Property { name: "textOffColor"; type: "QString"; value: "#000000"; }
+            Property { name: "textOffFontSize"; type: "int"; value: 14; }
+            Property { name: "textOn"; type: "QString"; value: "On"; }
+            Property { name: "textOnFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "textOnBold"; type: "bool"; value: false; }
+            Property { name: "textOnColor"; type: "QString"; value: "#000000"; }
+            Property { name: "textOnFontSize"; type: "int"; value: 14; }
+            Property { name: "on"; type: "bool"; value: false; }
+        }        
+    }
+
+Type {
+        name: "ImageButton"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Image Button"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "ImageButtonSource.qml" }
+        }
+    }
+
+	
+Type {
+        name: "GaugeIndicator"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Gauge Indicator"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "GaugeIndicatorSource.qml" }
+        }
+    }
+
+Type {
+        name: "Meter"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Meter"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "MeterSource.qml" }
+        }
+    }
+
+    Type {
+        name: "ScrollingTextBox"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Scrolling Text Box"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "ScrollingTextBoxSource.qml" }
+        }
+    }
+
+Type {
+        name: "LEDLight"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "LED Light"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "imageOn"; type: "QUrl"; value: "images/ledon.png"; }
+            Property { name: "imageOff"; type: "QUrl"; value: "images/ledoff.png"; }
+            Property { name: "on"; type: "bool"; value: false; }
+            Property { name: "fieldSpacing"; type: "int"; value: 4; }
+            Property { name: "label"; type: "QString"; value: "Label"; }
+            Property { name: "textPosition"; type: "QString"; value: "bottom"; }
+            Property { name: "textColor"; type: "QString"; value: "#000000"; }
+            Property { name: "font.family"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "font.bold"; type: "bool"; value: false; }
+            Property { name: "font.pixelSize"; type: "int"; value: 12; }
+        }
+    }
+
+Type {
+        name: "PanelReadOut"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Panel Read Out"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 211; }
+            Property { name: "height"; type: "int"; value: 99; }
+            Property { name: "imagePanel"; type: "QUrl"; value: "images/bezel.bmp"; }
+            Property { name: "text"; type: "QString"; value: "10000"; }
+            Property { name: "textColor"; type: "QString"; value: "#50dd0e"; }
+            Property { name: "font.family"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "font.bold"; type: "bool"; value: false; }
+            Property { name: "font.pixelSize"; type: "int"; value: 22; }
+        }
+    }
+
+Type {
+        name: "HorizontalLevelIndicator"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Level Indicator - Horizontal"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 200; }
+            Property { name: "height"; type: "int"; value: 20; }
+            Property { name: "startPosition"; type: "QString"; value: "left"; }
+            Property { name: "imageBase"; type: "QUrl"; value: "images/tank.png"; }
+            Property { name: "imageOverlay"; type: "QUrl"; value: "images/tank_overlay.png"; }
+            Property { name: "increment"; type: "int"; value: 4; }
+            Property { name: "minValue"; type: "int"; value: 0; }
+            Property { name: "maxValue"; type: "int"; value: 50; }
+            Property { name: "value"; type: "int"; value: 0; }
+            Property { name: "showHint"; type: "bool"; value: true; }
+            Property { name: "hintFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "hintFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "hintFontColor"; type: "QString"; value: "#000000"; }
+        }
+    }
+
+Type {
+        name: "VerticalLevelIndicator"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Level Indicator - Vertical"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"            
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 28; }
+            Property { name: "height"; type: "int"; value: 161; }
+            Property { name: "startPosition"; type: "QString"; value: "bottom"; }
+            Property { name: "imageBase"; type: "QUrl"; value: "images/level.png"; }
+            Property { name: "imageOverlay"; type: "QUrl"; value: "images/level_overlay.png"; }
+            Property { name: "increment"; type: "int"; value: 9; }
+            Property { name: "minValue"; type: "int"; value: 0; }
+            Property { name: "maxValue"; type: "int"; value: 18; }
+            Property { name: "value"; type: "int"; value: 0; }
+            Property { name: "showHint"; type: "bool"; value: true; }
+            Property { name: "hintFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "hintFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "hintFontColor"; type: "QString"; value: "#000000"; }
+        }
+    }
+
+Type {
+        name: "HorizontalCheckBoxList"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "CheckBox List - Horizontal"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "HorizontalCheckBoxListSource.qml" }
+        }
+    }
+
+Type {
+        name: "VerticalCheckBoxList"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "CheckBox List - Vertical"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "VerticalCheckBoxListSource.qml" }
+        }
+    }
+
+Type {
+        name: "NumericField"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Numeric Field - Horizontal"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 180; }
+            Property { name: "fieldSpacing"; type: "int"; value: 4; }
+            Property { name: "labelFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "labelText"; type: "QString"; value: "Label"; }
+            Property { name: "labelFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "labelColor"; type: "QString"; value: "#000000"; }
+            Property { name: "inputFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "inputText"; type: "QString"; value: ""; }
+            Property { name: "inputFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "inputColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "keyTextColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "keyboardAnimationSpeed"; type: "int"; value: 100; }
+            Property { name: "max"; type: "int"; value: 100; }
+            Property { name: "min"; type: "int"; value: 0; }
+        }
+    }
+
+Type {
+        name: "NumericSelector"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Numeric Selector"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 110; }
+            Property { name: "textFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "textFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "textColor"; type: "QString"; value: "#000000"; }
+            Property { name: "max"; type: "int"; value: 100; }
+            Property { name: "min"; type: "int"; value: 0; }
+            Property { name: "precision"; type: "int"; value: 0; }
+            Property { name: "increment"; type: "int"; value: 1; }
+            Property { name: "autoRepeat"; type: "bool"; value: true; }
+            Property { name: "autoRepeatInterval"; type: "int"; value: 100; }
+            Property { name: "displayText"; type: "string"; value: "<sup>o</sup>"; }
+            Property { name: "source"; type: "QUrl"; value: "images/bg_numericedit.png"; }
+            Property { name: "leftImageUp"; type: "QUrl"; value: "images/left_arrow_spin.png"; }
+            Property { name: "leftImageDown"; type: "QUrl"; value: "images/left_arrow_spin_off.png"; }
+            Property { name: "rightImageUp"; type: "QUrl"; value: "images/right_arrow_spin.png"; }
+            Property { name: "rightImageDown"; type: "QUrl"; value: "images/right_arrow_spin_off.png"; }
+        }
+    }
+
+
+Type {
+        name: "VerticalNumericField"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Numeric Field - Vertical"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 180; }
+            Property { name: "fieldSpacing"; type: "int"; value: 4; }
+            Property { name: "labelFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "labelText"; type: "QString"; value: "Label"; }
+            Property { name: "labelFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "labelColor"; type: "QString"; value: "#000000"; }
+            Property { name: "inputFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "inputText"; type: "QString"; value: ""; }
+            Property { name: "inputFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "inputColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "keyTextColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "keyboardAnimationSpeed"; type: "int"; value: 100; }
+            Property { name: "max"; type: "int"; value: 100; }
+            Property { name: "min"; type: "int"; value: 0; }
+        }
+    }
+
+Type {
+        name: "AlphaField"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Alphabetic Field - Horizontal"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "fieldSpacing"; type: "int"; value: 4; }
+            Property { name: "labelFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "labelText"; type: "QString"; value: "Label"; }
+            Property { name: "labelFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "labelColor"; type: "QString"; value: "#000000"; }
+            Property { name: "inputFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "inputText"; type: "QString"; value: ""; }
+            Property { name: "inputFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "inputColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "keyTextColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "keyboardAnimationSpeed"; type: "int"; value: 100; }
+        }
+    }
+
+Type {
+        name: "TimeField"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Time Field - Horizontal"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "TimeFieldSource.qml" }
+        }
+    }
+
+Type {
+        name: "VerticalTimeField"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Time Field - Vertical"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "VerticalTimeFieldSource.qml" }
+        }
+    }
+
+Type {
+        name: "DateField"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Date Field - Horizontal"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "DateFieldSource.qml" }
+        }
+    }
+
+Type {
+        name: "VerticalDateField"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Date Field - Vertical"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "VerticalDateFieldSource.qml" }
+        }
+    }
+
+Type {
+        name: "ListField"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "List Field - Horizontal"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "ListFieldSource.qml" }
+        }
+    }
+
+
+Type {
+        name: "VerticalListField"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "List Field - Vertical"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "VerticalListFieldSource.qml" }
+        }
+    }
+
+Type {
+        name: "VerticalAlphaField"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Alphabetic Field - Vertical"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "fieldSpacing"; type: "int"; value: 4; }
+            Property { name: "labelFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "labelText"; type: "QString"; value: "Label"; }
+            Property { name: "labelFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "labelColor"; type: "QString"; value: "#000000"; }
+            Property { name: "inputFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "inputText"; type: "QString"; value: ""; }
+            Property { name: "inputFontPixelSize"; type: "int"; value: 14; }
+            Property { name: "inputColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "keyTextColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "keyboardAnimationSpeed"; type: "int"; value: 100; }
+        }
+    }
+
+
+Type {
+        name: "HorizontalRadioButtonList"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "RadioButton List - Horizontal"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "HorizontalRadioButtonListSource.qml" }
+        }
+    }
+
+Type {
+        name: "VerticalRadioButtonList"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "RadioButton List - Vertical"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "VerticalRadioButtonListSource.qml" }
+        }
+    }
+
+Type {
+        name: "Spinner"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Spinner"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "SpinnerSource.qml" }
+        }
+    }
+
+Type {
+        name: "AnimatedSwitch"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Animated Switch"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 130; }
+            Property { name: "height"; type: "int"; value: 56; }
+            Property { name: "textOn"; type: "QString"; value: "On"; }
+            Property { name: "textOnX"; type: "int"; value: 18; }
+            Property { name: "textOff"; type: "QString"; value: "Off"; }
+            Property { name: "textOffX"; type: "int"; value: 78; }
+            Property { name: "on"; type: "bool"; value: false; }
+            Property { name: "imageOff"; type: "QUrl"; value: "images/background.svg"; }
+            Property { name: "imageOffWidth"; type: "int"; value: 130; }
+            Property { name: "imageOffHeight"; type: "int"; value: 56; }
+            Property { name: "imageOn"; type: "QUrl"; value: ""; }
+            Property { name: "sliderImage"; type: "QUrl"; value: "images/knob.svg"; }
+            Property { name: "sliderImageY"; type: "int"; value: 2; }
+            Property { name: "sliderImageOnX"; type: "int"; value: 1; }
+            Property { name: "sliderImageOffX"; type: "int"; value: 78; }
+            Property { name: "textColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "font.bold"; type: "bool"; value: false; }
+            Property { name: "font.pixelSize"; type: "int"; value: 22; }
+            Property { name: "font.family"; type: "QString"; value: "DejaVu Sans"; }
+
+        }
+    }
+
+Type {
+        name: "Knob"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Knob"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "KnobSource.qml" }
+        }
+    }
+
+Type {
+        name: "VerticalSwitchGroup"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Switch Group - Vertical"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "VerticalSwitchGroupSource.qml" }
+        }
+    }
+
+Type {
+        name: "HorizontalSwitchGroup"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Switch Group - Horizontal"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "HorizontalSwitchGroupSource.qml" }
+        }
+    }
+
+Type {
+        name: "VerticalSlider"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Slider - Vertical"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 48; }
+            Property { name: "height"; type: "int"; value: 184; }
+            Property { name: "allowDrag"; type: "bool"; value: "true"; }
+            Property { name: "showHint"; type: "bool"; value: "true"; }
+            Property { name: "imageTrack"; type: "QUrl"; value: "images/slider_track.bmp"; }
+            Property { name: "imageHandle"; type: "QUrl"; value: "images/slider_handle.png"; }
+            Property { name: "imageOverlay"; type: "QUrl"; value: ""; }
+            Property { name: "minimum"; type: "int"; value: 0; }
+            Property { name: "maximum"; type: "int"; value: 10; }
+            Property { name: "value"; type: "int"; value: 0; }
+            Property { name: "yMin"; type: "int"; value: 2; }
+            Property { name: "handleX"; type: "int"; value: 0; }
+            Property { name: "hintHeight"; type: "int"; value: 40; }
+            Property { name: "hintWidth"; type: "int"; value: 40; }
+            Property { name: "hintBackgroundColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "hintRadius"; type: "int"; value: 9; }
+            Property { name: "hintBorderWidth"; type: "int"; value: 2; }
+            Property { name: "hintBorderColor"; type: "QString"; value: "#000000"; }
+            Property { name: "hintFontPixelSize"; type: "int"; value: 16; }
+            Property { name: "hintFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "hintFontColor"; type: "QString"; value: "#000000"; }
+        }
+    }
+
+Type {
+        name: "HorizontalSlider"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Slider - Horizontal"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 184; }
+            Property { name: "height"; type: "int"; value: 48; }
+            Property { name: "allowDrag"; type: "bool"; value: "true"; }
+            Property { name: "showHint"; type: "bool"; value: "true"; }
+            Property { name: "imageTrack"; type: "QUrl"; value: "images/slider_htrack.png"; }
+            Property { name: "imageHandle"; type: "QUrl"; value: "images/slider_handle.png"; }
+            Property { name: "imageOverlay"; type: "QUrl"; value: ""; }
+            Property { name: "minimum"; type: "int"; value: 0; }
+            Property { name: "maximum"; type: "int"; value: 10; }
+            Property { name: "value"; type: "int"; value: 0; }
+            Property { name: "xMin"; type: "int"; value: 0; }
+            Property { name: "handleY"; type: "int"; value: 2; }
+            Property { name: "hintHeight"; type: "int"; value: 40; }
+            Property { name: "hintWidth"; type: "int"; value: 40; }
+            Property { name: "hintBackgroundColor"; type: "QString"; value: "#ffffff"; }
+            Property { name: "hintRadius"; type: "int"; value: 9; }
+            Property { name: "hintBorderWidth"; type: "int"; value: 2; }
+            Property { name: "hintBorderColor"; type: "QString"; value: "#000000"; }
+            Property { name: "hintFontPixelSize"; type: "int"; value: 16; }
+            Property { name: "hintFontFamily"; type: "QString"; value: "DejaVu Sans"; }
+            Property { name: "hintFontColor"; type: "QString"; value: "#000000"; }
+        }
+    }
+
+
+Type {
+        name: "VUMeter"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "VU Meter"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 377; }
+            Property { name: "height"; type: "int"; value: 242; }
+            Property { name: "backgroundImage"; type: "QString"; value: "images/vu_background.png"; }
+            Property { name: "needleImage"; type: "QString"; value: "images/vu_needle.png"; }
+            Property { name: "needleImageWidth"; type: "int"; value: 8; }
+            Property { name: "needleImageHeight"; type: "int"; value: 139; }
+            Property { name: "needleX"; type: "int"; value: 181; }
+            Property { name: "needleY"; type: "int"; value: 57; }
+            Property { name: "needleRotationX"; type: "int"; value: 4; }
+            Property { name: "needleRotationY"; type: "int"; value: 139; }
+            Property { name: "overlayImage"; type: "QString"; value: "images/vu_overlay.png"; }
+            Property { name: "overlayImageWidth"; type: "int"; value: 39; }
+            Property { name: "overlayImageHeight"; type: "int"; value: 26; }
+            Property { name: "overlayX"; type: "int"; value: 168; }
+            Property { name: "overlayY"; type: "int"; value: 191; }
+            Property { name: "value"; type: "int"; value: 0; }
+        }
+    }
+
+Type {
+        name: "Speedometer"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Speedometer"
+            category: " Reach Components"
+            libraryIcon: "item-icon.png"
+            requiredImport: "components"
+            Property { name: "width"; type: "int"; value: 210; }
+            Property { name: "height"; type: "int"; value: 210; }
+            Property { name: "backgroundImage"; type: "QString"; value: "images/meterbackground.png"; }
+            Property { name: "needleImage"; type: "QString"; value: "images/needle.png"; }
+            Property { name: "needleImageWidth"; type: "int"; value: 8; }
+            Property { name: "needleImageHeight"; type: "int"; value: 63; }
+            Property { name: "needleX"; type: "int"; value: 98; }
+            Property { name: "needleY"; type: "int"; value: 33; }
+            Property { name: "needleRotationX"; type: "int"; value: 5; }
+            Property { name: "needleRotationY"; type: "int"; value: 65; }
+            Property { name: "overlayImage"; type: "QString"; value: "images/overlay.png"; }
+            Property { name: "overlayImageWidth"; type: "int"; value: 148; }
+            Property { name: "overlayImageHeight"; type: "int"; value: 105; }
+            Property { name: "overlayX"; type: "int"; value: 21; }
+            Property { name: "overlayY"; type: "int"; value: 18; }
+            Property { name: "value"; type: "int"; value: 0; }
+            Property { name: "min"; type: "int"; value: 0; }
+            Property { name: "max"; type: "int"; value: 120; }
+            Property { name: "maxAngle"; type: "real"; value: 133.0; }
+
+
+        }
+    }
+	
+	
+	/********************************************  Graph Components ******************************************/
+	
+	Type {
+        name: "BarChart"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Bar Chart"
+            category: " Reach Graph Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "BarChartSource.qml" }
+        }
+    }
+
+Type {
+        name: "DrawArea"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Draw Area"
+            category: " Reach Graph Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "DrawAreaSource.qml" }
+        }
+    }
+
+Type {
+        name: "DoughnutChart"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Doughnut Chart"
+            category: " Reach Graph Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "DoughnutChartSource.qml" }
+        }
+    }
+
+Type {
+        name: "LineChart"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Line Chart"
+            category: " Reach Graph Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "LineChartSource.qml" }
+        }
+    }
+
+Type {
+        name: "PieChart"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Pie Chart"
+            category: " Reach Graph Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "PieChartSource.qml" }
+        }
+    }
+
+Type {
+        name: "ScatterChart"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Scatter Chart"
+            category: " Reach Graph Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "ScatterChartSource.qml" }
+        }
+    }
+
+Type {
+        name: "ScopeChart"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Scope Chart"
+            category: " Reach Graph Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "ScopeChartSource.qml" }
+        }
+    }
+
+Type {
+        name: "StripChart"
+        icon: "item-icon16.png"
+
+        ItemLibraryEntry {
+            name: "Strip Chart"
+            category: " Reach Graph Components"
+            libraryIcon: "item-icon.png"
+            QmlSource {source: "StripChartSource.qml" }
+        }
+    }
+
+}
