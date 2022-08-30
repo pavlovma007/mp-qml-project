@@ -2,4 +2,4 @@
 
 qmlscene 	-I ../../lib/industrial-controls/  	\
 			-I ../../build/						\
-	./demo-industrial-control.qml
+	./demo-builded-plugins.qml
