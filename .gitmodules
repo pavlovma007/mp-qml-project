@@ -1,0 +1,7 @@
+[submodule "lib/industrial-controls"]
+	path = lib/industrial-controls
+	url = git@github.com:pavlovma007/industrial-controls.git
+	branch = develop
+[submodule "lib/industrial-indicators"]
+	path = lib/industrial-indicators
+	url = git@github.com:pavlovma007/industrial-indicators.git
