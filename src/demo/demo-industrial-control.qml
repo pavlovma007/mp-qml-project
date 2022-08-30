@@ -1,11 +1,30 @@
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import Industrial.Controls 1.0 as Controls
-//import QSyncable 1.0
+
 import QMLExif 1.0
+
+import QSyncable 1.0
 
 Item {
 
+	// QSYNCABLE PLUGIN 
+//    JsonListModel {
+//        source: []
+//        keyField: 'uuid'
+//    }
+    ListView {
+        model: JsonListModel {
+            source: [] // json
+            keyField: 'uuid'
+        }
+        delegate: Text {
+            text: ''
+        }
+    }
+
+
+	// EXIF PLUGIN 
 	QMLExif {
 		id: exif
 		source: "./example.JPG"
@@ -38,5 +57,7 @@ Item {
 		wrapMode: Text.WordWrap
 		text:exif.getTagName(tag) + ": " + exif.getTagValue(tag)
 	}
+	
+	
 	
 }

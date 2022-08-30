@@ -1,16 +1,13 @@
 #!/bin/bash 
 
 
-rm -rf build/qsyncable 
-mkdir -p build/qsyncable
-cd build/qsyncable
+rm -rf build/QSyncable
+mkdir -p build/QSyncable
+cd build/QSyncable
 cmake  ../../lib/qsyncable
 make 
 
 # remove all except target lib
 rm -rf `find .  ! -name "libqsyncable.so"    ! -name "." ! -name ".." `
 
-
-
-
-#cmake lib/qsyncable '-GCodeBlocks - Unix Makefiles' 
+cp ../../lib/qsyncable/qmldir ./
