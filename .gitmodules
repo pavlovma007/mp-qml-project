@@ -5,3 +5,18 @@
 [submodule "lib/industrial-indicators"]
 	path = lib/industrial-indicators
 	url = git@github.com:pavlovma007/industrial-indicators.git
+[submodule "lib/sqlite-editor-qtqml"]
+	path = lib/sqlite-editor-qtqml
+	url = git@github.com:ndesai/sqlite-editor-qtqml.git
+[submodule "lib/buho"]
+	path = lib/buho
+	url = https://invent.kde.org/maui/buho.git
+[submodule "lib/index-fm"]
+	path = lib/index-fm
+	url = https://invent.kde.org/maui/index-fm.git
+[submodule "lib/kirigami"]
+	path = lib/kirigami
+	url = https://invent.kde.org/frameworks/kirigami.git
+[submodule "lib/mauikit"]
+	path = lib/mauikit
+	url = https://invent.kde.org/maui/mauikit.git
