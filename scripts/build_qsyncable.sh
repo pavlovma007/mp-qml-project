@@ -10,3 +10,7 @@ make
 # remove all except target lib
 rm -rf `find .  ! -name "libqsyncable.so"`
 
+
+
+
+#cmake lib/qsyncable '-GCodeBlocks - Unix Makefiles' 
