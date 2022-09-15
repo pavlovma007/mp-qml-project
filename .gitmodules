@@ -26,3 +26,6 @@
 [submodule "lib/QMLExif_plugin"]
 	path = lib/QMLExif_plugin
 	url = git@github.com:Match-Yang/QMLExif.git
+[submodule "lib/marbledeclarative"]
+	path = lib/marbledeclarative
+	url = https://invent.kde.org/education/marble.git
