@@ -1,0 +1,2 @@
+module StateLight
+singleton State 1.0 State.qml
