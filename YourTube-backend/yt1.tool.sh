@@ -517,11 +517,13 @@ collectPlInfo() {
 # OK проверено. дубликатов не плодит
 # TODO опции: скачать только метаинформацию, 
 # TODO + превью большое в большом качестве + превью разного размера 
+# TODO ошибка в имени + надо url
 savePlInfo() {
 	DB=yt
 
 	plName=$(cat plName.txt)
 	plId=$(cat plId.txt)
+
 
 	# создаём запись, что этот плейлист имеет такое - то имя
 	korni3 insert $DB playlists "{\"id\":\"$plId\", \"name\":\"$plId\", \"type\":\"youtube\"}" --ignore
