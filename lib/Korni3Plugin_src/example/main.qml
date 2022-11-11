@@ -25,11 +25,18 @@ Rectangle {
         x:255; y: 32
         //text: qsTr("text")
     }
+    function openFile(path){
+        // TODO escape
+        Korni3Api.execInBack('browse "'+path+'"  ') //
+    }
     Component.onCompleted: {
-        Korni3Api.newCommandResult.connect(function(cid, data){
-//            print('qml read result', cid, data)
-            dataId.text = data
-        })
-        Korni3Api.runCommand("ls1", "ls /")
+//        Korni3Api.newCommandResult.connect(function(cid, data){
+//            dataId.text = data
+//        })
+
+        //dataId.text = Korni3Api.runCommand("ls1", "ls /")
+        openFile('/home/mp/Документы/Haas_J._Anatomia_tanca.pdf')
+        dataId.text = Korni3Api.runCommand("korni1", "korni3 db yt")
+
     }
 }

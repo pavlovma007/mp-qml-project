@@ -1,9 +1,14 @@
 #include "korni3_api.h"
 
-#include <QDebug>
+//#include <QDebug>
+#include <QThread>
+
+#include <iostream> // stdin stdout stderr open close
+#include <sstream>
+#include <thread>
 
 #include "my_command.h"
-#include <iostream> // stdin stdout stderr open close
+// #include <unistd.h> // fork
 
 QObject* Korni3Api::m_instance = nullptr;
 
@@ -33,15 +38,39 @@ QObject* Korni3Api::qmlInstance(QQmlEngine* engine, QJSEngine* scriptEngine)
     return m_instance;
 }
 
-bool Korni3Api::runCommand(QString commandId, QString command)
+QString Korni3Api::runCommand(const QString& commandId, const QString& command, bool isToSignal)
 {
-    cout << command.toStdString() << "  " << commandId.toStdString() << endl;
     int status = -1;
-    execCommand(command.toStdString(), status, [this, &commandId](char* buf, int count) {
-        cout << count << endl;
-        emit this->newCommandResult(commandId, QString::fromUtf8(buf));
+    stringstream ss;
+    execCommand(command.toStdString(), status,
+                [this, &commandId, &isToSignal, &ss](char* buf, int count) {
+                    if (isToSignal)
+                        emit this->newCommandResult(commandId, QString::fromUtf8(buf, count));
+                    else
+                        ss.str(string(buf, count));
+                });
+    return QString::fromStdString(ss.str());
+}
+
+void Korni3Api::execInBack(const QString& command)
+{
+    class T1 : public QThread
+    {
+    public:
+        QString m_c;
+        explicit T1(const QString& c) : m_c(c){};
+        void run() override
+        {
+            int status = -1;
+            execCommand(m_c.toStdString(), status, [](char*, int) {});
+        };
+    };
+    T1* t = new T1(command);
+    QObject::connect(t, &T1::finished, this, [t]() {
+        t->deleteLater();
     });
-    return true;
+    t->start();
+    return;
 }
 
 QString Korni3Api::source() const
