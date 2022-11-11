@@ -1,2 +1,7 @@
 build/
 config.json
+
+lib/Korni3Plugin/Makefile
+lib/Korni3Plugin/*.o
+lib/Korni3Plugin/.qtc_clangd
+lib/Korni3Plugin/.qmake.stash/

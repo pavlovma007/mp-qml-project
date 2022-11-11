@@ -16,11 +16,13 @@ uri = Korni3Plugin
 # Input
 SOURCES += \
     korni3_api.cpp \
-    korni3plugin_plugin.cpp
+    korni3plugin_plugin.cpp \
+    my_command.cpp
 
 HEADERS += \
     korni3_api.h \
-    korni3plugin_plugin.h
+    korni3plugin_plugin.h \
+    my_command.h
 
 DISTFILES = qmldir
 
