@@ -4,9 +4,11 @@
 # find old runned instance 
 pid=$(ps -alF | grep qt5/bin/qmlscene | head -n 1 | awk '{print $4}')
 # run new instance 
-qmlscene 	-I ../../lib/industrial-controls/     -I ../../build/   \
-	-I ./qml/Korni/Applications/Launcher \
-	./qml/Korni/Applications/Launcher/Tube.qml & 
+
+#	-I ./qml/Korni/Applications/Launcher \
+
+qmlscene 	-I ../../build  \
+	./qml/Korni/Applications/Launcher/Light.qml & 
 # get new instance pid
 newPid=$!
 # wait loading 
