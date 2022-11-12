@@ -1,8 +1,8 @@
 #!/bin/bash 
 
-rm -rf build/QMLExif_plugin
-mkdir -p build/QMLExif_plugin
-cd build/QMLExif_plugin
+rm -rf build/QMLExif
+mkdir -p build/QMLExif
+cd build/QMLExif
 qmake  '../../lib/QMLExif_plugin/'
 make 
 
