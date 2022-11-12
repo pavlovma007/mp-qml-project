@@ -13,12 +13,16 @@ public:
     ~Korni3Api();
     static QObject* qmlInstance(QQmlEngine* engine, QJSEngine* scriptEngine);
 
-    Q_INVOKABLE bool runCommand(QString commandId, QString command);
+    Q_INVOKABLE QString runCommand(const QString& commandId, const QString& command,
+                                   bool isToSignal = false);
+
+    Q_INVOKABLE void execInBack(const QString& command);
 
 public slots:
 
 signals:
     void sourceChanged(QString source);
+    // for runCommand
     void newCommandResult(QString commandId, QString command);
 
 private:

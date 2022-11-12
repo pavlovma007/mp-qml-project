@@ -43,3 +43,11 @@ webengine is not deplyable ; 	нам надо webview
 - [ ] 
 - [ ] 
 - [ ] 
+
+
+---------------------------------------
+
+таблицы sqlite3
+	#tablesQuery = """SELECT name FROM sqlite_master
+	#	WHERE type='table';"""
+    

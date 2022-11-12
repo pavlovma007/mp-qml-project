@@ -1,6 +1,7 @@
 #include "korni3_api.h"
 
 //#include <QDebug>
+//#include <QTextStream>
 #include <QThread>
 
 #include <iostream> // stdin stdout stderr open close
@@ -41,15 +42,23 @@ QObject* Korni3Api::qmlInstance(QQmlEngine* engine, QJSEngine* scriptEngine)
 QString Korni3Api::runCommand(const QString& commandId, const QString& command, bool isToSignal)
 {
     int status = -1;
-    stringstream ss;
+    cerr << "command=" << command.toStdString() << endl;
+    stringstream* ss = new stringstream();
+    //QTextStream ss;
     execCommand(command.toStdString(), status,
-                [this, &commandId, &isToSignal, &ss](char* buf, int count) {
+                [this, &commandId, &isToSignal, ss](char* buf, int count) {
                     if (isToSignal)
                         emit this->newCommandResult(commandId, QString::fromUtf8(buf, count));
                     else
-                        ss.str(string(buf, count));
+                        ss->write(buf, count);
+                    //                    else
+                    //                        ss << QString::fromStdString(string(buf, count));
                 });
-    return QString::fromStdString(ss.str());
+    //QString* s = nullptr; // ss.string();
+    //return s ? *s : "";   // ss.readAll();
+    auto s = QString::fromStdString(ss->str());
+    delete ss;
+    return s;
 }
 
 void Korni3Api::execInBack(const QString& command)
