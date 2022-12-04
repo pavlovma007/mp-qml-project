@@ -1,4 +1,0 @@
-pragma Singleton
-
-//StateReal {}
-StateMock {}

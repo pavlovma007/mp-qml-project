@@ -1,0 +1,94 @@
+#!/bin/bash
+# sudo apt-get update && sudo apt-get install lftp
+
+#1. gitftppush <current brunch >
+#2. gitftpfetch # all 
+#3. gitftppull <current branch> 
+
+clean() {
+	mkdir -p /tmp/gitftp
+	rm -rf /tmp/gitftp/*
+}
+
+push() {
+	clean
+
+	branchname=$(  git branch | grep '^*'| head -n 1| awk '{print $2}'   )
+	git bundle create --progress /tmp/gitftp/$branchname.bundle $branchname
+	
+	(lftp <<EEE
+		set dns:order "inet6 inet"
+		set file:charset UTF-8
+		set ftp:timezone ""
+		set net:max-retries 2
+		set net:timeout 30
+		set ssl:verify-certificate no  # !!!
+		#set xfer:log yes
+		#set xfer:log-file /tmp/lftp.log
+		#set xfer:max-log-size 1048576
+		set xfer:max-redirections 10
+		#set xfer:verify-command /usr/share/lftp/verify-file	
+	open ftp://pavlovma007.myjino.ru --user 'pavlovma007_gitftp' --password 'bm&GRsjsgn*2'
+	mkdir -f branches
+	#get wp-config-sample.php -o sample.php
+	rm "branches/$branchname.bundle"
+	put "/tmp/gitftp/$branchname.bundle" -o "branches/$branchname.bundle"
+EEE
+	) && echo 'SUCCESS'
+	
+}
+#push
+#clean
+
+pull() {
+	clean
+	if [ -z "$1" ]; then 
+		branchname=$(  git branch | grep '^*'| head -n 1| awk '{print $2}'   )
+	else
+		branchname="$1"
+	fi
+	echo branch = $branchname
+	lftp <<EEE
+		set dns:order "inet6 inet"
+		set file:charset UTF-8
+		set ftp:timezone ""
+		set net:max-retries 2
+		set net:timeout 30
+		set ssl:verify-certificate no  # !!!
+		#set xfer:log yes
+		#set xfer:log-file /tmp/lftp.log
+		#set xfer:max-log-size 1048576
+		set xfer:max-redirections 10
+		#set xfer:verify-command /usr/share/lftp/verify-file	
+	open ftp://pavlovma007.myjino.ru --user 'pavlovma007_gitftp' --password 'bm&GRsjsgn*2'
+	
+	#put "/tmp/gitftp/$branchname.bundle" -o "$branchname.bundle"
+	mirror -P 3 branches /tmp/gitftp
+EEE
+	git bundle verify "/tmp/gitftp/$branchname.bundle" \
+		&&  git fetch "/tmp/gitftp/$branchname.bundle" $branchname:other-$branchname \
+		||  (echo 'we has branches...' ; echo; ls /tmp/gitftp|sed -e 's/.bundle//'	)
+}
+#pull
+
+ 
+
+case $1 in
+
+  push)
+	push
+    ;;
+
+  pull)
+	bn=$2
+	echo bn $bn
+	pull $bn
+    ;;
+
+  *)
+    echo 'push # current bunch'
+    echo 'pull <branchname>'
+    ;;
+esac
+
+exit 0

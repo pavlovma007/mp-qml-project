@@ -93,9 +93,11 @@ Rectangle {
                                     + '" --entry-text="' + text + '" '
             + (false ? ' --hide-text ' : ''))
     }
+    // TESTS
     function playlists(){
         return Korni3Api.runCommand('', './yt-playlists.py')
     }
+    // TESTS
     function videosOfPlaylist(playlistName){
         return Korni3Api.runCommand('', './yt-videos.py "'+playlistName+'"  ')
     }

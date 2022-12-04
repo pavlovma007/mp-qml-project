@@ -53,10 +53,12 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Korni3Plugin_src/korni3_api.cpp \
-		../Korni3Plugin_src/korni3plugin_plugin.cpp moc_korni3_api.cpp \
+		../Korni3Plugin_src/korni3plugin_plugin.cpp \
+		../Korni3Plugin_src/my_command.cpp moc_korni3_api.cpp \
 		moc_korni3plugin_plugin.cpp
 OBJECTS       = korni3_api.o \
 		korni3plugin_plugin.o \
+		my_command.o \
 		moc_korni3_api.o \
 		moc_korni3plugin_plugin.o
 DIST          = ../Korni3Plugin_src/qmldir \
@@ -161,8 +163,10 @@ DIST          = ../Korni3Plugin_src/qmldir \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../Korni3Plugin_src/korni3_plugin.pro ../Korni3Plugin_src/korni3_api.h \
-		../Korni3Plugin_src/korni3plugin_plugin.h ../Korni3Plugin_src/korni3_api.cpp \
-		../Korni3Plugin_src/korni3plugin_plugin.cpp
+		../Korni3Plugin_src/korni3plugin_plugin.h \
+		../Korni3Plugin_src/my_command.h ../Korni3Plugin_src/korni3_api.cpp \
+		../Korni3Plugin_src/korni3plugin_plugin.cpp \
+		../Korni3Plugin_src/my_command.cpp
 QMAKE_TARGET  = Korni3Plugin
 DESTDIR       = 
 TARGET        = libKorni3Plugin.so
@@ -396,8 +400,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Korni3Plugin_src/korni3_api.h ../Korni3Plugin_src/korni3plugin_plugin.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Korni3Plugin_src/korni3_api.cpp ../Korni3Plugin_src/korni3plugin_plugin.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Korni3Plugin_src/korni3_api.h ../Korni3Plugin_src/korni3plugin_plugin.h ../Korni3Plugin_src/my_command.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Korni3Plugin_src/korni3_api.cpp ../Korni3Plugin_src/korni3plugin_plugin.cpp ../Korni3Plugin_src/my_command.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -459,11 +463,15 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-korni3_api.o: ../Korni3Plugin_src/korni3_api.cpp 
+korni3_api.o: ../Korni3Plugin_src/korni3_api.cpp ../Korni3Plugin_src/korni3_api.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o korni3_api.o ../Korni3Plugin_src/korni3_api.cpp
 
-korni3plugin_plugin.o: ../Korni3Plugin_src/korni3plugin_plugin.cpp ../Korni3Plugin_src/korni3plugin_plugin.h
+korni3plugin_plugin.o: ../Korni3Plugin_src/korni3plugin_plugin.cpp ../Korni3Plugin_src/korni3plugin_plugin.h \
+		../Korni3Plugin_src/korni3_api.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o korni3plugin_plugin.o ../Korni3Plugin_src/korni3plugin_plugin.cpp
+
+my_command.o: ../Korni3Plugin_src/my_command.cpp ../Korni3Plugin_src/my_command.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o my_command.o ../Korni3Plugin_src/my_command.cpp
 
 moc_korni3_api.o: moc_korni3_api.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_korni3_api.o moc_korni3_api.cpp
