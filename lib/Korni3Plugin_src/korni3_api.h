@@ -3,6 +3,9 @@
 
 #include <QQuickItem>
 
+#include <QProcess>
+#include <QVariant>
+
 class Korni3Api : public QQuickItem
 {
     Q_OBJECT
@@ -34,4 +37,13 @@ private:
     QString m_source;
 };
 
+class Korni3Process : public QProcess
+{
+    Q_OBJECT
+
+public:
+    Korni3Process(QObject* parent = 0);
+    Q_INVOKABLE void start(const QString& program, const QVariantList& arguments);
+    Q_INVOKABLE QByteArray readAll();
+};
 #endif // LIBKORNI3PLUGIN_H

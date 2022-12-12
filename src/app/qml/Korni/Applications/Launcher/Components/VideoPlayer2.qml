@@ -8,7 +8,7 @@ import './' 1.0 as C
 Rectangle {
 	width: parent.width
 	height: 500
-	color: 'black'
+    color: 'black'
     readonly property bool isPlaying: video.playbackState !== MediaPlayer.PlayingState
     readonly property alias position: video.position
     readonly property alias state: video.playbackState
@@ -27,7 +27,6 @@ Rectangle {
 		anchors.fill: parent
 		width : 800
         height : 600
-        //source: "/home/mp/Видео/работа. борьба с зависаниями-2022-08-24_16.34.12.mp4"
 
 		function playPause(){
 			if(video.playbackState === MediaPlayer.PlayingState)
@@ -37,11 +36,58 @@ Rectangle {
 		}
 		
 		MouseArea {
+            id: videoMaId
 			anchors.fill: parent
+            hoverEnabled: true
+
 			onClicked: {
 				video.playPause();
 			}
-		}
+            onWheel: {
+                video.play();
+                if(wheel.angleDelta.y > 0){
+                  video.seek(video.position - 5000)
+                }else{
+                  video.seek(video.position + 5000)
+                }
+            }
+            ToolTip {
+                visible: videoMaId.containsMouse
+                text: 'Колесиком можно перематывать'
+            }
+
+            property bool isManyTimeNoMotion: false
+            Timer {
+                id: noMotionTimerId
+                interval: 6000
+                onTriggered: parent.isManyTimeNoMotion = true
+            }
+            Timer {
+                id: returnProgressSizeTimerId
+                interval: 2000
+                onTriggered: {
+                    var tmp = (Math.abs(videoMaId.mouseY - plId.y + plId.height / 2) < 10)
+                    if(!tmp)
+                        parent.isNearProgressBar = false
+                    else
+                        restart()
+                }
+            }
+            property bool isNearProgressBar: false
+            function resetTmer(){
+                isManyTimeNoMotion = false
+                noMotionTimerId.restart()
+            }
+            onMouseYChanged: {
+                var tmp = (Math.abs(mouseY - plId.y + plId.height / 2) < 10)
+                if(tmp){
+                    isNearProgressBar = true
+                    returnProgressSizeTimerId.restart();
+                }
+                resetTmer()
+            }
+            onMouseXChanged: resetTmer()
+        }
 
         focus: true
         Keys.onSpacePressed: video.playPause()
@@ -73,11 +119,12 @@ Rectangle {
 	C.ProressLine {
         id: plId
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 45
+        anchors.bottomMargin: 45 - height / 2
         anchors.horizontalCenter: parent.horizontalCenter
+        visible: !videoMaId.isManyTimeNoMotion
 
-        height: 5
-        internalHeight: 5
+        height: videoMaId.isNearProgressBar ? 8 : 5
+        internalHeight: height
         radius: 2
 
 		progressIn : video.hasVideo && video.position / video.duration
@@ -132,6 +179,8 @@ Rectangle {
         anchors.leftMargin: 25
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
+        visible: !videoMaId.isManyTimeNoMotion
+
         opacity: hovered ? 1.0 : 0.5
         source: video.playbackState !== MediaPlayer.PlayingState ? 'icons/video-play-icon.svg' : 'icons/video-pause-icon.svg'
         onClicked: {
@@ -146,6 +195,8 @@ Rectangle {
         anchors.leftMargin: 70
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
+        visible: !videoMaId.isManyTimeNoMotion
+
         opacity: hovered ? 1.0 : 0.7
         source : 'icons/youtube-next-icon.svg'
         onClicked: {
@@ -161,7 +212,12 @@ Rectangle {
         anchors.leftMargin: 120
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 15
-        opacity: hovered ? 1.0 : 0.7
+        visible: !videoMaId.isManyTimeNoMotion
+
+        //opacity: hovered ? 1.0 : 0.7
+        opacity: 0.4 // disabled
+        cursorShape: Qt.ArrowCursor
+
         source : 'icons/youtube-sound-icon.png'
     }
 

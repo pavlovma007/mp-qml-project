@@ -3,6 +3,7 @@ import QtQuick 2.6
 Image {
 	id: rootId
 	property bool hovered : false
+    property alias cursorShape: maId.cursorShape
 	signal clicked
     fillMode: Image.PreserveAspectCrop
 

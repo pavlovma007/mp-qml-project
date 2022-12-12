@@ -5,3 +5,6 @@ lib/Korni3Plugin/Makefile
 lib/Korni3Plugin/*.o
 lib/Korni3Plugin/.qtc_clangd
 lib/Korni3Plugin/.qmake.stash/
+
+lib/Korni3Plugin/moc_*
+lib/Korni3Plugin/.qtc_clangd/*

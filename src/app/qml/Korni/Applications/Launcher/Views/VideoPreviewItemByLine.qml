@@ -11,7 +11,7 @@ Rectangle {
     width: 800
     height: contentId.height
 
-    property string imagePreviewSource: "https://i.ytimg.com/vi/lpdVWXk-ZKY/hqdefault.jpg"
+    property string imagePreviewSource: 'icons/default-video-icon.png'
     property string name: "Укрепление рубля / Закрытие ядерного ..."
     property string channelName: "aftershock.news"
     property string viewCount: "25 тыс. просмотров"
@@ -37,18 +37,32 @@ Rectangle {
         spacing: 8
 
         Text {
+            width: 32
             id: number
             leftPadding: parent.spacing
             text: '1'
         }
 
+
         // image
         Item {
             width: 120; height: 70
+            Layout.preferredWidth: 120
+            Layout.preferredHeight: 70
+
+            C.HoveredImage {
+                width: 130; height: 70; x:0; y:0
+                source: './icons/default-video-icon.png'
+                opacity: 0.5
+                onClicked: rootId.clicked()
+            }
+
             C.HoveredImage {
                 id: img
-                width: 120; height: 70
+                width: 120; height: 70; x:0; y:0
                 source: imagePreviewSource
+                onSourceChanged: print('source', source)
+                onClicked: rootId.clicked()
             }
             Rectangle {
                 id: mask
@@ -60,7 +74,6 @@ Rectangle {
             }
             Item {
                 anchors.fill: parent
-
             }
             OpacityMask {
                 anchors.fill: img
@@ -91,12 +104,12 @@ Rectangle {
             Layout.fillWidth: true
 
             Text {
-                width: rootId.width
+                Layout.fillWidth: true
                 wrapMode: Text.WordWrap
 
                 font.family: "Roboto, Arial, sans-serif, "
                 font.pointSize: 13
-                color: 'black' // Qt.darkGray
+                color: 'black'
                 text: name
             }
             Text {
@@ -117,8 +130,23 @@ Rectangle {
 //        }
 
           // TODO make round blink when pressed
-        C.Buttin3PointRound {
+        C.Button3PointRound {
             id: menuButton
+
+            Menu {
+                id: menuFile
+                title: qsTr("&File")
+                MenuItem {
+                    text: qsTr("&Open")
+                    onTriggered: messageDialog.show(qsTr("Open action triggered"));
+                }
+                MenuItem {
+                    text: qsTr("E&xit")
+                    onTriggered: Qt.quit();
+                }
+            }
+
+            onClicked: menuFile.open()
         }
     }
 

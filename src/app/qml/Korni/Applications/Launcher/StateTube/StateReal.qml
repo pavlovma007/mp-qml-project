@@ -28,7 +28,7 @@ Item {
     JsonListModel {
         id: playlistVideosId
         keyField: 'id'
-        fields: ['id','zT','imagePreviewSource','name','channelName','viewCount','whenLoaded',
+        fields: ['id','zT','imagePreviewSource','name','channelName','viewCount','whenLoaded','duration',
             'playlist', 'release_timestamp', 'epoch'] // videoFileId
     }
     // ============playlists================================
@@ -101,10 +101,24 @@ Item {
 
     Component.onCompleted: {
         //goToPlaylists()
-        goToPlaylist('UCVIDh3IrKeFOd41TUCFTGxA')
+        //goToPlaylist('UCVIDh3IrKeFOd41TUCFTGxA')
 
-        //goToPlaylist('PLLqKATfceKNvS2MXnJMhLf2sAtNT6WHQL') // UCfRP4GY7iS9UuOGlZiSGhNw
-        //goToVideo('PLLqKATfceKNvS2MXnJMhLf2sAtNT6WHQL', 'JY-q3tNSCNw')
+        goToPlaylist('PL3xTr7kT-yE9B3L7m5C2YMrtgpIFOVaWl') // UCfRP4GY7iS9UuOGlZiSGhNw PLLqKATfceKNvS2MXnJMhLf2sAtNT6WHQL
+        //goToVideo('PLLqKATfceKNvS2MXnJMhLf2sAtNT6WHQL', 'kX6hlJn4F-k')  // JY-q3tNSCNw
     }
 }
 
+
+
+//Korni3Process {
+//    id: process
+//    onReadyRead: text.text = readAll();
+//}
+
+//Timer {
+//    interval: 1000
+//    repeat: true
+//    triggeredOnStart: true
+//    running: true
+//    onTriggered: process.start(/bin/cat, [ /proc/uptime ]);
+//}

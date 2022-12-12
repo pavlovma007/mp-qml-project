@@ -86,3 +86,24 @@ QString Korni3Api::source() const
 {
     return m_source;
 }
+
+Korni3Process::Korni3Process(QObject* parent) : QProcess(parent)
+{
+}
+
+void Korni3Process::start(const QString& program, const QVariantList& arguments)
+{
+    QStringList args;
+
+    // convert QVariantList from QML to QStringList for QProcess
+
+    for (int i = 0; i < arguments.length(); i++)
+        args << arguments[i].toString();
+
+    QProcess::start(program, args);
+}
+
+QByteArray Korni3Process::readAll()
+{
+    return QProcess::readAll();
+}
