@@ -27,7 +27,7 @@ res=cur.execute('select "yt-videos"."id","yt-videos"."zT","yt-videos"."title","y
 	'FROM "yt-videos" '+
 	'INNER JOIN "yt-link-playlist-video" on "yt-link-playlist-video"."videoId" = "yt-videos"."id"'+
 	'WHERE "yt-link-playlist-video"."playlistId"=? '+
-	'order by random()    limit 100' , (playlistId,))
+	'order by random() ' , (playlistId,))
 					
 def getFileId(videoId):
 	cur2 = con.cursor()

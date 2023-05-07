@@ -6,6 +6,8 @@ import ujson
 import subprocess
 import sqlite3
 
+"состав плейлиста по его id"
+
 p = print
 def ep(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)

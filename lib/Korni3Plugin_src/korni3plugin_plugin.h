@@ -2,7 +2,7 @@
 
 #include <QQmlExtensionPlugin>
 
-class QMLExifPlugin : public QQmlExtensionPlugin
+class QMLExecPlugin : public QQmlExtensionPlugin
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QQmlExtensionInterface")

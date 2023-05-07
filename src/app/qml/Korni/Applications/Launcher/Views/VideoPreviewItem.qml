@@ -6,7 +6,7 @@ import '../Components' 1.0 as C
 // TODO добавить полосочку на сколько процентов просмотрено видео тобой
 Item {
     id: rootId
-    width: 210
+    width: 202
     height: contentId.height
 
     property string imagePreviewSource: "https://i.ytimg.com/vi/lpdVWXk-ZKY/hqdefault.jpg"
@@ -14,14 +14,18 @@ Item {
     property string channelName: "aftershock.news"
     property string viewCount: "25 тыс. просмотров"
     property alias whenLoaded: whenLoadedId.text
+    property alias duration: timecode.text
 
     signal clicked()
+
+    readonly property int _height : 114
 
     // image not available
     C.HoveredImage {
         width: rootId.width
-        height: 114
-        source: './icons/default-video-icon.png'
+        height: _height
+        fillMode: Image.PreserveAspectCrop
+        source: './icons/video-default-icon-3.svg'
         opacity: 0.5
         //scale: 0.5
     }
@@ -31,10 +35,33 @@ Item {
         topPadding: 0
         spacing: 8
 
-        C.HoveredImage {
+        Item{
             width: rootId.width
-            height: 114
-            source: imagePreviewSource
+            height: _height
+            C.HoveredImage {
+                anchors.fill: parent
+                source: imagePreviewSource
+            }
+            // timecode
+            Rectangle {
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                readonly property int sp: 2
+                width: timecode.width + 2 * sp
+                height: timecode.height + 2 * sp
+                color: 'black'
+                radius: 5
+                Text {
+                    id: timecode
+                    leftPadding: parent.sp
+                    topPadding: parent.sp
+                    text: '25:31'
+                    font.pixelSize: 13
+                    color: 'white'
+                }
+            }
+
+
         }
         Text {
             width: rootId.width

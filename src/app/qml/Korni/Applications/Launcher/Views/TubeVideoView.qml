@@ -2,6 +2,8 @@ import QtQml 2.3
 import QtQuick 2.6
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.6 // ScrollBar Button
+import QtQuick.Window 2.1 // Screen
+import Industrial.Controls 1.0 as Controls
 
 import '../Components' 1.0 as C
 import '../StateTube' 1.0 as S
@@ -36,7 +38,7 @@ FocusScope {
 		}
 		function up(){
 			if(sbVideoId.position - sbVideoId.stepSize > 0.01)
-				sbVideoId.decrease()
+                sbVideoId.decrease()
 		}
 		focus: true
 		Keys.onUpPressed: up()
@@ -67,25 +69,97 @@ FocusScope {
 			// Up toolbar
 			Item {
 				height: 50;  width: rootId.width;
+
 				Rectangle {
 					color: '#2E2F30'
-					x:0; y:0; height: 50;  width: rootId.width;
+                    x:0; y:0; height: 50;  width: rootId.width;
 				}
-				RowLayout {
+                RowLayout {
 					x:0; y:0; height: 50;  width: rootId.width;
-					spacing: 5
+                    spacing: Controls.Theme.spacing
 
-					// TODO BACK button
-					Rectangle {
-						width: 40
-						height: 40
-						color: '#04112A'
-						MouseArea {
-							anchors.fill: parent
-							onClicked: { S.State.goToPlaylist(S.State.playlistId) }
-						}
-					}
-					Item {
+                    // BACK playlist button
+                    Rectangle {
+                        width: 2 * Controls.Theme.margins + Controls.Theme.baseSize
+                        height: 2 * Controls.Theme.margins + Controls.Theme.baseSize
+                        Layout.leftMargin: Controls.Theme.margins
+                        color: '#04112A'
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            hoverEnabled: true
+                            Controls.ToolTip {
+                                text: qsTr('К плейлисту')
+                                visible: parent.containsMouse || playlistIconId.hovered
+                            }
+                            onClicked: { S.State.goToPlaylist(S.State.playlistId) }
+                        }
+                        C.HoveredImage {
+                            id: playlistIconId
+                            anchors.centerIn: parent
+                            source: './icons/playlist-icon-40-1.svg'
+                            width: Controls.Theme.iconSize
+                            height: width
+    //                        source
+                            onClicked: { S.State.goToPlaylist(S.State.playlistId) }
+                        }
+                    }
+
+                    // Menu button
+                    Rectangle {
+                        width: 2 * Controls.Theme.margins + Controls.Theme.baseSize
+                        height: 2 * Controls.Theme.margins + Controls.Theme.baseSize
+                        color: '#04112A'
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            hoverEnabled: true
+                            Controls.ToolTip {
+                                text: qsTr('Меню')
+                                visible: parent.containsMouse || menuIconId.hovered
+                            }
+                            onClicked: menuButtonId.open()
+                        }
+                        C.HoveredImage {
+                            id: menuIconId
+                            anchors.centerIn: parent
+                            source: './icons/menu-flat-icon-1.svg'
+                            width: Controls.Theme.iconSize
+                            height: width
+    //                        source
+                            onClicked: menuButtonId.open()
+                        }
+                        C.Menu {
+                            id: menuButtonId
+                            title: qsTr('Действия с видео')
+                            C.MenuItem {
+                                id: control
+                                text: qsTr('Скачать видео в папочку')
+//                                contentItem: Controls.Label {
+//                                    text: control.text
+//                                    font: control.font
+//                                    color: Controls.Theme.colors.tipText
+//                                    wrapMode: Text.WordWrap
+//                                    horizontalAlignment: Qt.AlignHCenter
+//                                }
+
+//                                background: Rectangle {
+//                                    color: Controls.Theme.colors.tip
+//                                    radius: Controls.Theme.rounding
+
+//                                    MouseArea {
+//                                        anchors.fill: parent
+//                                        onPressed: if(control.сloseOnClick) control.close()
+//                                    }
+//                                }
+
+                                //shortcut: StandardKey.Save
+                                onTriggered: print('not implemented')
+                            }
+                        }
+                    }
+
+                    Item {
 						Layout.fillWidth: true
 					}
 					C.HoveredImage {
@@ -98,27 +172,27 @@ FocusScope {
 						}
 						onHoveredChanged: { if(hovered ) showTT(); }
 						onClicked: { if(ttId.visible) ttId.hide(); else showTT(); }
-						ToolTip {
+                        ToolTip {
 							id: ttId
 							timeout: 3000
 							contentItem: Column {
 								Text {
-									text: 'Управление аккаунтом\nПользователь: abc'
+                                    text: qsTr('Управление аккаунтом\nПользователь: abc')
 									color: 'white'
 								}
 								Button {
-									text: 'запустить приложение'
+                                    text: qsTr('запустить приложение')
 								}
 							}
 							background: Rectangle {
 								color: '#606060' //'#2E2F30'
 							}
 						}
-					}
+                    }
 				}
 
 			}
-			C.SearchLine {
+            C.SearchLine {
 				width: parent.width * 0.8
 				x: parent.width * 0.1
 				onSearch: function(text){
@@ -137,6 +211,7 @@ FocusScope {
 						  : 510
 
 				player.source: !!S.State.video ? S.State.video.videoFile : ''
+                stateIn: S.State.playStateIn
 				Connections {
 					target: videoId.player
 					onSourceChanged: {
@@ -144,7 +219,10 @@ FocusScope {
 						videoId.player.play()
 					}
 				}
-				onStateOutChanged: S.State.playState = state
+                onStateOutChanged: {
+                    S.State.playStateOut = stateOut
+                    S.State.playStateIn = stateOut // fact
+                }
 			}
 			// tags
 			Row {
@@ -192,9 +270,9 @@ FocusScope {
 						MouseArea {
 							anchors.fill: parent
 							hoverEnabled: true
-							ToolTip {
+                            Controls.ToolTip {
 								visible: parent.containsMouse
-								text: 'на момент сохранния видео в базе'
+                                text: qsTr('на момент сохранния видео в базе')
 							}
 						}
 					}

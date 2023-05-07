@@ -7,7 +7,7 @@
 // part2
 #include <QtQml>
 
-void QMLExifPlugin::registerTypes(const char* uri)
+void QMLExecPlugin::registerTypes(const char* uri)
 {
     // @uri com.mycompany.qmlcomponents
     Q_ASSERT(uri == QLatin1String("Korni3Plugin"));
@@ -15,6 +15,19 @@ void QMLExifPlugin::registerTypes(const char* uri)
     //    qmlRegisterType<Korni3Api>(uri, 1, 0, "Korni3Api");
     qmlRegisterSingletonType<Korni3Api>(uri, 1, 0, "Korni3Api", &Korni3Api::qmlInstance);
 
-    // http://www.xargs.com/qml/process.html
-    qmlRegisterType<Korni3Process>("Korni3Process", 1, 0, "Korni3Process");
+    // Korni3ApiProcesshttp://www.xargs.com/qml/process.html
+    qmlRegisterType<Korni3ApiProcess>(uri, 1, 0, "Korni3ApiProcess");
+
+    //    Korni3ApiProcess {
+    //        id: process
+    //        onReadyRead: text.text = readAll();
+    //    }
+
+    //    Timer {
+    //        interval: 1000
+    //        repeat: true
+    //        triggeredOnStart: true
+    //        running: true
+    //        onTriggered: process.start(/bin/cat, [ /proc/uptime ]);
+    //    }
 }

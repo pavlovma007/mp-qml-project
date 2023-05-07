@@ -19,7 +19,8 @@ public:
     Q_INVOKABLE QString runCommand(const QString& commandId, const QString& command,
                                    bool isToSignal = false);
 
-    Q_INVOKABLE void execInBack(const QString& command);
+    // TODO
+    //    Q_INVOKABLE void execInBack(const QString& command, QStringList args, QString signalId);
 
 public slots:
 
@@ -37,12 +38,12 @@ private:
     QString m_source;
 };
 
-class Korni3Process : public QProcess
+class Korni3ApiProcess : public QProcess
 {
     Q_OBJECT
 
 public:
-    Korni3Process(QObject* parent = 0);
+    Korni3ApiProcess(QObject* parent = 0);
     Q_INVOKABLE void start(const QString& program, const QVariantList& arguments);
     Q_INVOKABLE QByteArray readAll();
 };

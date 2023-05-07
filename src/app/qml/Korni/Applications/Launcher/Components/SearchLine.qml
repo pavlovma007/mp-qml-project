@@ -1,6 +1,7 @@
 import QtQml 2.3
 import QtQuick 2.3
 import QtQuick.Controls 2.5
+import Industrial.Controls 1.0 as Controls
 
 Rectangle {
     id: rootId

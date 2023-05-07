@@ -2,6 +2,8 @@ import QtQml 2.3
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtMultimedia 5.12
+import Industrial.Controls 1.0 as Controls
+
 import './' 1.0 as C
 
 // video play
@@ -18,7 +20,7 @@ Rectangle {
 
     signal next
     onStateInChanged: {
-        if(state !== stateIn )
+        if( video.playbackState !== stateIn )
             video.playPause()
     }
 	
@@ -51,7 +53,7 @@ Rectangle {
                   video.seek(video.position + 5000)
                 }
             }
-            ToolTip {
+            Controls.ToolTip {
                 visible: videoMaId.containsMouse
                 text: 'Колесиком можно перематывать'
             }

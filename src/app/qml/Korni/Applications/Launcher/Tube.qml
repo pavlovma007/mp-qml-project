@@ -1,11 +1,12 @@
 import QtQml 2.3
 import QtQuick 2.6
+import QtQuick.Controls 2.10 // Label
 //import QtQuick.Controls 2.6 // Switch // ScrollBar Button RoundButton
 import QtQuick.Window 2.1
 import QtQuick.Layouts 1.3
 import Industrial.Controls 1.0 as Controls
 
-import QMLExif 1.0
+//import QMLExif 1.0
 
 import QSyncable 1.0 // TODO remove
 
@@ -39,16 +40,32 @@ Window {
 //    }
 
 
-//    Repeater { // optional playlists
-//        model: S.State.viewName === 'playlists'
-//        Flickable {
-//            Flow {
-//                Repeater {
-//                    V.PlaylistPreviewItem { }
-//                }
-//            }
-//        }
-//    }
+    Repeater { // optional playlists
+        model: S.State.viewName === 'playlists'
+        Flickable {
+            Column {
+                spacing: 10
+                Repeater {
+                    model : S.State.playlists
+                    Button {
+                        text: '' + model.uploader
+                        flat: true
+                        hoverEnabled: true
+                        highlighted: hovered || pressed
+
+                        font.pixelSize: 22
+                        //font.italic: true
+                        onClicked: {
+                            S.State.goToPlaylist(model.id)
+                        }
+                    }
+//                    V.PlaylistPreviewItem {
+//                        name: model.uploader
+//                    }
+                }
+            }
+        }
+    }
 
 
 

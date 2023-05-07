@@ -8,12 +8,12 @@ Item {
     property bool isWindowMaximized: false
     property string viewName: 'playlist' // video | playlist | playlists
     property bool isListMode: false
-    // =================for video ==============================
-    property var video
-    property string videoFile: '/home/mp/Видео/Библиотека-2022-11-07_18.53.11.mp4'
-    property int playState: 0
-    onPlayStateChanged: print('playState=', playState)
 
+    // ================= for video ==============================
+    property var video
+    property bool isAutoPlay : true
+    property int playStateIn: 0 // command for video    1 play 2 pause
+    property int playStateOut: 0 // report from player
     property alias comments: commentsId
     JsonListModel {
         id: commentsId
@@ -21,9 +21,59 @@ Item {
         fields: ['id','text','likes','dislikes','parent','date','isILike','isIDislike',
                 'repliesCount','author_thumbnail']
     }
-    // ==============for playlist ===========================
+    Korni3ApiProcess {
+        id: processVideoId
+        property string data
+        onStarted: data = ''
+        onReadyRead: data += readAll()
+        onFinished: {
+            video=JSON.parse(data)
+            viewName = 'video'
+            if(isAutoPlay)
+                playStateIn = 1
+        }
+    }
+    Korni3ApiProcess {
+        id: processCommentsId
+        property string data
+        onStarted: data = ''
+        onReadyRead: data += readAll()
+        onFinished: {
+            var commentsTmp = JSON.parse(data)
+            var commentsTmp2=[]
+            for(var i=0;i<commentsTmp.length; ++i){
+                var c=commentsTmp[i]
+                commentsTmp2.push({
+                                      id: c.id,
+                                      text: c.text,
+                                      likes: c.like_count,
+                                      //dislikes: 10,
+                                      date: c.timestamp, // '1 дань назад',
+                                      isILike: false, // TODO
+                                      isIDislike: false, // TODO
+                                      repliesCount: c.repliesCount,
+                                      //isHasReplies: c.isHasReplies > 0,
+                                      //author_thumbnail: c.author_thumbnail // todo file
+                                      // todo comment author
+                                  })
+            }
+            commentsId.source = commentsTmp2
+        }
+    }
+    function goToVideo(playlistId, videoId){
+        if(!video || !video.id || videoId !== video.id){ //
+            processVideoId.start('./yt-backend/yt-video.py', [videoId] )
+            processCommentsId.start('./yt-backend/yt-video-comments.py', [videoId, 'root'] )
+        }else{
+            viewName = 'video'
+            if(isAutoPlay)
+                playStateIn = 1
+        }
+    }
+
+    // ==============for playlist (many videos) ===========================
     property string playlistId: 'promtech'
-    property var playlist
+    //    property var playlist
     property alias playlistVideos: playlistVideosId
     JsonListModel {
         id: playlistVideosId
@@ -31,94 +81,77 @@ Item {
         fields: ['id','zT','imagePreviewSource','name','channelName','viewCount','whenLoaded','duration',
             'playlist', 'release_timestamp', 'epoch'] // videoFileId
     }
-    // ============playlists================================
+    Korni3ApiProcess {
+        id: processVideosId
+        property string data
+        onStarted: data = ''
+        onReadyRead: data += readAll()
+        onFinished: {
+            playlistVideosId.source = JSON.parse(data)
+            viewName = 'playlist'
+        }
+    }
+    Korni3ApiProcess {
+        id: processPlaylistId
+        property string data
+        property string plId: ''
+        onStarted: data = ''
+        onReadyRead: data += readAll()
+        onFinished: {
+            playlistVideosId.source = JSON.parse(data)
+            playlistId = plId
+            viewName = 'playlist'
+        }
+    }
+    function goToPlaylist(plId){
+        playStateIn = 2 // pause
+        if(playlistId !== plId ){
+            processPlaylistId.plId = plId
+            processPlaylistId.start('./yt-backend/yt-playlist.py', [plId] )
+            processVideosId.start('./yt-backend/yt-videos.py', [plId] )
+        } else
+            viewName = 'playlist'
+    }
+
+
+    // ============ playlists (many pls) ==============================
     property alias playlists: playlistsId
     JsonListModel {
         id: playlistsId
         keyField: 'id'
-        fields: ["id","zT","name","type","zU","uploader","url",'tags']
+        fields: ["id","zT","name","type","zU","uploader","url","tags"]
     }
-    // =====================================================
-
-    function goToVideo(playlistId, videoId){
-        video=JSON.parse(Korni3Api.runCommand('', './yt-backend/yt-video.py "'+videoId+'"'))
-
-        var commentsTmp = JSON.parse(Korni3Api.runCommand('', './yt-backend/yt-video-comments.py "'+videoId+'"  '+'"root"'))
-        var commentsTmp2=[]
-        for(var i=0;i<commentsTmp.length; ++i){
-            var c=commentsTmp[i]
-            commentsTmp2.push({
-                                  id: c.id,
-                                  text: c.text,
-                                  likes: c.like_count,
-                                  //dislikes: 10,
-                                  date: c.timestamp, // '1 дань назад',
-                                  isILike: false, // TODO
-                                  isIDislike: false, // TODO
-                                  repliesCount: c.repliesCount,
-                                  //isHasReplies: c.isHasReplies > 0,
-                                  //author_thumbnail: c.author_thumbnail // todo file
-                                  // todo comment author
-                              })
+    Korni3ApiProcess {
+        id: processPlayListsId
+        property string data
+        onStarted: data = ''
+        onReadyRead: {
+            data += readAll()
         }
-        commentsId.source = commentsTmp2
+        onFinished: {
+            var tmpPlaylists = JSON.parse(data)
+            playlistsId.source = tmpPlaylists
 
-        viewName = 'video'
-        playState = 1
-        // auto play TODO
+            playStateIn = 2 // pause
+            viewName = 'playlists'
+        }
     }
-    function goToPlaylist(plId){
-        playlistId = plId
-        var tmpPlaylist = JSON.parse(Korni3Api.runCommand('', './yt-backend/yt-playlist.py "'+plId+'"'))
-
-        // fix selected tags enable and disable
-        //var newTags=[]
-        //for(var index in tmpPlaylist.tags){
-        //    newTags.push({text: tmpPlaylist.tags[index] , selected: true})
-        //}
-        //tmpPlaylist.tags=newTags
-        playlist = tmpPlaylist
-
-        viewName = 'playlist'
-        //print('playlist.name', playlist.name)
-        playlistVideosId.source = getVideosOfPlaylist(playlistId)
-        //print('S.State.playlistVideos', playlistVideos)
+    function goToPlaylists(uploader){
+        uploader = uploader || ''  // TODO
+        processPlayListsId.start('./yt-backend/yt-playlists.py', [uploader])
     }
-    function goToPlaylists(){
-        playlistsId.source = getPlaylists('')
-    }
-
-
-    // ============================Back work======================================
-    function getPlaylists(filterText){
-        return JSON.parse(Korni3Api.runCommand('', './yt-backend/yt-playlists.py "'+filterText+'"'))
-    }
-    function getVideosOfPlaylist(playlistId){
-        return JSON.parse(Korni3Api.runCommand('', './yt-backend/yt-videos.py "'+playlistId+'"  '))
-    }
-
 
 
     Component.onCompleted: {
-        //goToPlaylists()
-        //goToPlaylist('UCVIDh3IrKeFOd41TUCFTGxA')
+        goToPlaylists()
 
-        goToPlaylist('PL3xTr7kT-yE9B3L7m5C2YMrtgpIFOVaWl') // UCfRP4GY7iS9UuOGlZiSGhNw PLLqKATfceKNvS2MXnJMhLf2sAtNT6WHQL
+        //goToPlaylist('PL0jsIjRtCuJ1mk1y-Gow88KwSLAxAaZ9q') // учеба
+        //goToPlaylist('PL3xTr7kT-yE9B3L7m5C2YMrtgpIFOVaWl') // UCfRP4GY7iS9UuOGlZiSGhNw PLLqKATfceKNvS2MXnJMhLf2sAtNT6WHQL
+        //goToPlaylist('PLLqKATfceKNvFCXEgtm4U-Ey9HuALpQCj') // черный треугольник Защита
+        //goToPlaylist('PLEm80CtdsYuyOVbAcDgjxmvif7nTySRWL')
+        //goToPlaylist('PLhGvxgDCtsZCKjLvtdJr69isoP3bstdhL')
         //goToVideo('PLLqKATfceKNvS2MXnJMhLf2sAtNT6WHQL', 'kX6hlJn4F-k')  // JY-q3tNSCNw
+        
+        //goToPlaylist('PLT4VoYPje97tMcpP3XCO0OyQE-laBDrVX')
     }
 }
-
-
-
-//Korni3Process {
-//    id: process
-//    onReadyRead: text.text = readAll();
-//}
-
-//Timer {
-//    interval: 1000
-//    repeat: true
-//    triggeredOnStart: true
-//    running: true
-//    onTriggered: process.start(/bin/cat, [ /proc/uptime ]);
-//}

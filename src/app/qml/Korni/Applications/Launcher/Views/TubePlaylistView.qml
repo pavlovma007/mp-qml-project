@@ -188,7 +188,7 @@ FocusScope {
                                        !!model.epoch && model.epoch !== 'null' && model.epoch !== 'NULL'
 									   ? 'запись в бд создана '+epochToText(model.epoch)
 									   : '' // model.release_timestamp
-
+                        duration: durationToText(parseInt(model.duration))
 
 						onClicked: S.State.goToVideo(S.State.playlistId, model.id)
 					}
@@ -196,7 +196,6 @@ FocusScope {
 			}
 			Column {
 				id: videoPreviewItemByLineColumnId
-				//width: rootId.width
 				Layout.fillWidth: true
 
 				rightPadding: 9
@@ -215,16 +214,6 @@ FocusScope {
 						name: model.name //"Укрепление рубля / \nЗакрытие ядерного ..."
 						channelName: model.playlist // "aftershock.news"
 						viewCount: model.viewCount // "25 тыс. просмотров"
-						function durationToText(durSec){
-							print('durSec', durSec, typeof durSec)
-							var h = Math.trunc(durSec / 3600)
-							var m = Math.trunc((durSec - h * 3600) / 60)
-							var s = Math.trunc((durSec - h * 3600 - m * 60) / 60)
-							if(h>0)
-								return ''+h+':'+m+':'+s
-						   else
-								return ''+m+':'+s
-						}
 						duration: durationToText(parseInt(model.duration))
 						videoNumber: index + 1
 //                            function epochToText(ep){
@@ -249,4 +238,17 @@ FocusScope {
 			}
 		}
 	}
+    function durationToText(durSec){
+        //print('durSec', durSec, typeof durSec)
+        var h = Math.trunc(durSec / 3600)
+        h = isNaN(h) ? '-' : h
+        var m = Math.trunc((durSec - h * 3600) / 60)
+        m = isNaN(m) ? '-' : m
+        var s = Math.trunc((durSec - h * 3600 - m * 60) / 60)
+        s = isNaN(s) ? '-' : s
+        if(h>0)
+            return ''+h+':'+m+':'+s
+       else
+            return ''+m+':'+s
+    }
 }

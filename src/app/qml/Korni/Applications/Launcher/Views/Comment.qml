@@ -9,7 +9,7 @@ RowLayout {
     property string who: 'Анонимус'
     property alias userIconSource: userImageId.source
     property bool isSmallUserIcon: false
-    property string whenText: '1 день назад'
+    property string whenText: '' // TODO qsTr('1 день назад')
     property int likeCount: 237
     property int dislikeCount: 732
     property bool likedByYour: false

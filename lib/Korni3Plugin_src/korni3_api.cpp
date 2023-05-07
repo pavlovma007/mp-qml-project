@@ -39,6 +39,7 @@ QObject* Korni3Api::qmlInstance(QQmlEngine* engine, QJSEngine* scriptEngine)
     return m_instance;
 }
 
+// sync method
 QString Korni3Api::runCommand(const QString& commandId, const QString& command, bool isToSignal)
 {
     int status = -1;
@@ -61,37 +62,50 @@ QString Korni3Api::runCommand(const QString& commandId, const QString& command, 
     return s;
 }
 
-void Korni3Api::execInBack(const QString& command)
-{
-    class T1 : public QThread
-    {
-    public:
-        QString m_c;
-        explicit T1(const QString& c) : m_c(c){};
-        void run() override
-        {
-            int status = -1;
-            execCommand(m_c.toStdString(), status, [](char*, int) {});
-        };
-    };
-    T1* t = new T1(command);
-    QObject::connect(t, &T1::finished, this, [t]() {
-        t->deleteLater();
-    });
-    t->start();
-    return;
-}
+//class T1 : public QThread
+//{
+//    Q_OBJECT
+//signals:
+//    void t1Ready(QString data);
+
+//public:
+//    QString m_c;
+//    explicit T1(const QString& c) : m_c(c){};
+//    void run() override
+//    {
+//        int status = -1;
+//        stringstream* ss = new stringstream();
+//        execCommand(m_c.toStdString(), status, [&ss](char* buf, int count) {
+//            ss->write(buf, count);
+//        });
+//        emit this->t1Ready(QString::fromStdString(ss->str()));
+//    };
+//};
+
+//void Korni3Api::execInBack(const QString& command, QStringList args, QString signalId)
+//{
+//    T1* t = new T1(command);
+//    QObject::connect(t, &T1::finished, this, [t]() {
+//        t->deleteLater();
+//    });
+//    QObject::connect(t, &T1::t1Ready, this, [this, signalId](QString data) {
+//        this->newCommandResult(signalId, data);
+//    });
+
+//    t->start();
+//    return;
+//}
 
 QString Korni3Api::source() const
 {
     return m_source;
 }
 
-Korni3Process::Korni3Process(QObject* parent) : QProcess(parent)
+Korni3ApiProcess::Korni3ApiProcess(QObject* parent) : QProcess(parent)
 {
 }
 
-void Korni3Process::start(const QString& program, const QVariantList& arguments)
+void Korni3ApiProcess::start(const QString& program, const QVariantList& arguments)
 {
     QStringList args;
 
@@ -103,7 +117,7 @@ void Korni3Process::start(const QString& program, const QVariantList& arguments)
     QProcess::start(program, args);
 }
 
-QByteArray Korni3Process::readAll()
+QByteArray Korni3ApiProcess::readAll()
 {
     return QProcess::readAll();
 }

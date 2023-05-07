@@ -61,7 +61,6 @@ Rectangle {
                 id: img
                 width: 120; height: 70; x:0; y:0
                 source: imagePreviewSource
-                onSourceChanged: print('source', source)
                 onClicked: rootId.clicked()
             }
             Rectangle {
@@ -80,6 +79,7 @@ Rectangle {
                 source: img
                 maskSource: mask
             }
+            // timecode
             Rectangle {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom

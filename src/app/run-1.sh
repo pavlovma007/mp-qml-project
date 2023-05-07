@@ -8,7 +8,8 @@ pid=$(ps -alF | grep qt5/bin/qmlscene | head -n 1 | awk '{print $4}')
 #	-I ./qml/Korni/Applications/Launcher \
 
 QT_LOGGING_RULES=1 qmlscene 	-I ../../build  \
-	./qml/Korni/Applications/Launcher/Tube.qml &   # Light
+	./qml/Korni/Applications/Launcher/Tube.qml &   # Tube \
+	#./qml/Korni/Applications/Launcher/Light.qml &  # Light
 	#./qml/Korni/Applications/Launcher/Views/VideoPreviewItemByLine.qml & 
 # get new instance pid
 newPid=$!
