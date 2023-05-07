@@ -23,7 +23,7 @@ con = sqlite3.connect(path, timeout=10)
 cur = con.cursor()
 
 offset=0
-limit=1000
+limit=10000
 # плейлисты в случайном порядке
 res = cur.execute('select "yt-playlists"."id", "yt-playlists"."zT", "yt-playlists"."name","yt-playlists"."type","yt-playlists"."zU","yt-playlists"."uploader",'+
 	'"yt-playlists"."url" FROM "yt-playlists" where name like ? order by random() limit ? offset ? ;', (filterText, limit, offset))

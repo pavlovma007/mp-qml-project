@@ -115,6 +115,7 @@ Item {
 
 
     // ============ playlists (many pls) ==============================
+    property string uploaderId
     property alias playlists: playlistsId
     JsonListModel {
         id: playlistsId
@@ -123,14 +124,14 @@ Item {
     }
     Korni3ApiProcess {
         id: processPlayListsId
+        property string uploader : ''
         property string data
         onStarted: data = ''
-        onReadyRead: {
-            data += readAll()
-        }
+        onReadyRead:  data += readAll()
         onFinished: {
             var tmpPlaylists = JSON.parse(data)
             playlistsId.source = tmpPlaylists
+            uploaderId = uploader
 
             playStateIn = 2 // pause
             viewName = 'playlists'
@@ -138,6 +139,7 @@ Item {
     }
     function goToPlaylists(uploader){
         uploader = uploader || ''  // TODO
+        processPlayListsId.uploader = uploader
         processPlayListsId.start('./yt-backend/yt-playlists.py', [uploader])
     }
 

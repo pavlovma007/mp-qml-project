@@ -1,6 +1,6 @@
 import QtQml 2.3
 import QtQuick 2.6
-import QtQuick.Controls 2.10 // Label
+//import QtQuick.Controls 2.10 // Button
 //import QtQuick.Controls 2.6 // Switch // ScrollBar Button RoundButton
 import QtQuick.Window 2.1
 import QtQuick.Layouts 1.3
@@ -31,41 +31,20 @@ Window {
     V.TubeVideoView {}
 
     // playlist
-    V.TubePlaylistView {}
-
+    Repeater {
+        model: S.State.viewName === 'playlist'
+        V.TubePlaylistView {}
+    }
+    // playlists
+    Repeater {
+        model: S.State.viewName === 'playlists'
+        V.TubePlaylistsView {}
+    }
 //    onActiveFocusItemChanged: {
 //        print("activeFocusItem", activeFocusItem /*, activeFocusItem.objectName*/)
 //        for(var c in activeFocusItem.children)
 //            print(activeFocusItem.children[c])
 //    }
-
-
-    Repeater { // optional playlists
-        model: S.State.viewName === 'playlists'
-        Flickable {
-            Column {
-                spacing: 10
-                Repeater {
-                    model : S.State.playlists
-                    Button {
-                        text: '' + model.uploader
-                        flat: true
-                        hoverEnabled: true
-                        highlighted: hovered || pressed
-
-                        font.pixelSize: 22
-                        //font.italic: true
-                        onClicked: {
-                            S.State.goToPlaylist(model.id)
-                        }
-                    }
-//                    V.PlaylistPreviewItem {
-//                        name: model.uploader
-//                    }
-                }
-            }
-        }
-    }
 
 
 

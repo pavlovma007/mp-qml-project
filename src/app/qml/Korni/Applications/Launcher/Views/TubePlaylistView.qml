@@ -7,215 +7,184 @@ import '../Components' 1.0 as C
 import '../StateTube' 1.0 as S
 
 // playlist
-FocusScope {
-	width: childrenRect.width; height: childrenRect.height
-	x:childrenRect.x; y: childrenRect.y
-	anchors.fill: parent
+Column {
+    id: componentId
+    width: rootId.width // rootId - is window
+    spacing: 5
 
-	Flickable {
-		id: playlistFlickId
-		visible: S.State.viewName === 'playlist'
-		contentWidth: playlistContentId.width
-		contentHeight: playlistContentId.height
+    C.UpToolbar {
+        id: upToolbarId
+    }
+    // ID of playlist and switcher
+    RowLayout {
+        id: filterId
+        Layout.fillWidth: true
+        Layout.leftMargin: 9
+        Layout.rightMargin: 9
 
-		boundsBehavior: Flickable.StopAtBounds
+        TextEdit {
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter
+            text:  'Плейлист:' + '       ' + (!!S.State.playlist ? S.State.playlist.id : '')
+            font.pixelSize: 16
+            color: 'gray'
 
-		ScrollBar.vertical: ScrollBar { // todo size + customization
-			id : sbPlaylistId
-			focus: true
-			width: 10
-			height: playlistFlickId.height
-			orientation: Qt.Vertical
-			policy: ScrollBar.AlwaysOn
-		}
-		function down(){
-			if(sbPlaylistId.position + sbPlaylistId.stepSize < 0.89)
-				sbPlaylistId.increase()
-		}
-		function up(){
-			if(sbPlaylistId.position - sbPlaylistId.stepSize > 0.01)
-				sbPlaylistId.decrease()
-		}
-		focus: true
-		Keys.onUpPressed: up()
-		Keys.onDownPressed: down()
-		MouseArea {
-			anchors.fill: parent
-			onWheel: {
-				if(wheel.angleDelta.y > 0){
-				  playlistFlickId.up()
-				}else{
-				  playlistFlickId.down()
-				}
-			}
-		}
-		onContentHeightChanged: { // если ширина изменилась то и высота тоже - надо чтобы скрол точно был на прежнем месте
-			sbPlaylistId.position = 0.0
-		}
-		onContentWidthChanged: playlistTagFlowId.forceLayout()
+            selectByMouse: true
+        }
 
-		ColumnLayout {
-			id: playlistContentId
-			width: rootId.width
+        Text { text: 'Плиткой' }
+        Switch {
+            onCheckedChanged: S.State.isListMode = checked
+        }
+        Text { text: 'Списком' }
+    }
 
-			// ID of playlist and switcher
-			RowLayout {
-				Layout.fillWidth: true
-				Layout.leftMargin: 9
-				Layout.rightMargin: 9
+    C.SearchLine {
+        id: searchLineId
 
-				TextEdit {
-					Layout.fillWidth: true
-					Layout.alignment: Qt.AlignHCenter
-					text:  'Плейлист:' + '       ' + (!!S.State.playlist ? S.State.playlist.id : '')
-					font.pixelSize: 16
-					color: 'gray'
+        onSearch: function(text){
+            print('search not implemented:', text)
+        }
+    }
 
-					selectByMouse: true
-				}
+    ScrollView {
+        width: rootId.width
+        height: rootId.height
+                - componentId.spacing * (componentId.children.length - 1)
+                - upToolbarId.height - filterId.height - searchLineId.height
+        clip: true
 
-				Text { text: 'Плиткой' }
-				Switch {
-					onCheckedChanged: S.State.isListMode = checked
-				}
-				Text { text: 'Списком' }
-			}
+        ColumnLayout {
+            id: playlistContentId
+            width: rootId.width
 
-			C.SearchLine {
-				Layout.fillWidth: true
-				Layout.leftMargin: 9
-				Layout.rightMargin: 9
+            // NAME of playlist
+            TextEdit {
+                Layout.fillWidth: true
+                Layout.leftMargin: 9
+                Layout.rightMargin: 9
 
-				onSearch: function(text){
-					print('search not implemented:', text)
-				}
-			}
-			// NAME of playlist
-			TextEdit {
-				Layout.fillWidth: true
-				Layout.leftMargin: 9
-				Layout.rightMargin: 9
+                wrapMode: Text.WordWrap
+                selectByMouse: true
+                readOnly: true
+                text: (!!S.State.playlist ? S.State.playlist.name : '')
+                font.pixelSize: 32
+            }
 
-				wrapMode: Text.WordWrap
-				selectByMouse: true
-				readOnly: true
-				text: (!!S.State.playlist ? S.State.playlist.name : '')
-				font.pixelSize: 32
-			}
+            // tags
+            Flow {
+                id: playlistTagFlowId
+                //Layout.fillWidth: true
+                width: rootId.width - 9 * 2
+                Layout.leftMargin: 9
+                Layout.rightMargin: 9
 
-			// tags
-			Flow {
-				id: playlistTagFlowId
-				//Layout.fillWidth: true
-				width: rootId.width - 9 * 2
-				Layout.leftMargin: 9
-				Layout.rightMargin: 9
+                spacing: 5
+                property int modelLenLimit: 1000 // max tag len in theory
 
-				spacing: 5
-				property int modelLenLimit: 1000 // max tag len in theory
+                Repeater {
+                    model: {
+                        var result=[]
+                        if(!S.State.playlist)
+                            return result
+                        for(var i in S.State.playlist.tags){
+                            if(i > parent.modelLenLimit)
+                                break
+                            result.push({text: S.State.playlist.tags[i], selected: false})
+                        }
+                        return result
+                    }
+                    Text {
+                        text: ' #' + modelData.text
+                        color: 'blue'
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: print('not implemented. tag=', modelData.text)
+                        }
+                    }
+                }
+                RoundButton {
+                    width: 24 ; height: 24
+                    baselineOffset: -7
+                    topPadding: 3
+                    text: '+'
+                    font.pixelSize: 10
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onPressed:  mouse.accepted = false
+                    }
+                    onClicked: print('TODO show tags popup')
+                }
+                onHeightChanged: {
+                    if(height > 100)
+                        modelLenLimit /= 2
+                }
 
-				Repeater {
-					model: {
-						var result=[]
-						if(!S.State.playlist)
-							return result
-						for(var i in S.State.playlist.tags){
-							if(i > parent.modelLenLimit)
-								break
-							result.push({text: S.State.playlist.tags[i], selected: false})
-						}
-						return result
-					}
-					Text {
-						text: ' #' + modelData.text
-						color: 'blue'
-						MouseArea {
-							anchors.fill: parent
-							cursorShape: Qt.PointingHandCursor
-							onClicked: print('not implemented. tag=', modelData.text)
-						}
-					}
-				}
-				RoundButton {
-					width: 24 ; height: 24
-					baselineOffset: -7
-					topPadding: 3
-					text: '+'
-					font.pixelSize: 10
-					MouseArea {
-						anchors.fill: parent
-						cursorShape: Qt.PointingHandCursor
-						onPressed:  mouse.accepted = false
-					}
-					onClicked: print('TODO show tags popup')
-				}
-				onHeightChanged: {
-					if(height > 100)
-						modelLenLimit /= 2
-				}
+            }
 
-			}
+            // videos
+            Flow {
+                Layout.fillWidth: true
 
-			Flow {
-				Layout.fillWidth: true
+                width: rootId.width
+                rightPadding: 9
+                leftPadding: 9
 
-				width: rootId.width
-				rightPadding: 9
-				leftPadding: 9
-
-				spacing: 16
-				Repeater {
-					model: !S.State.isListMode && S.State.playlistVideos
+                spacing: 16
+                Repeater {
+                    model: !S.State.isListMode && S.State.playlistVideos
                     VideoPreviewItem {
-						Binding on imagePreviewSource {
-							value: model.imagePreviewSource
-							when : !!model.imagePreviewSource
-						}
-						name: model.name //"Укрепление рубля / \nЗакрытие ядерного ..."
-						channelName: model.playlist // "aftershock.news"
-						viewCount: model.viewCount // "25 тыс. просмотров"
-						function epochToText(ep){
-							var date = new Date(ep * 1000)
-							var s = '' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-							return s;
-						}
-						function whenLoadedToText(s){
-							var r = s.match(/(\d\d\d\d)(\d\d)(\d\d)/)
-							return '' + r[1] + '-' + r[2] + '-' + r[3]
-						}
-						whenLoaded : !!model.whenLoaded && model.whenLoaded !== 'null' && model.whenLoaded !== 'NULL'
-									 ? whenLoadedToText(model.whenLoaded) :
+                        Binding on imagePreviewSource {
+                            value: model.imagePreviewSource
+                            when : !!model.imagePreviewSource
+                        }
+                        name: model.name //"Укрепление рубля / \nЗакрытие ядерного ..."
+                        channelName: model.playlist // "aftershock.news"
+                        viewCount: model.viewCount // "25 тыс. просмотров"
+                        function epochToText(ep){
+                            var date = new Date(ep * 1000)
+                            var s = '' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+                            return s;
+                        }
+                        function whenLoadedToText(s){
+                            var r = s.match(/(\d\d\d\d)(\d\d)(\d\d)/)
+                            return '' + r[1] + '-' + r[2] + '-' + r[3]
+                        }
+                        whenLoaded : !!model.whenLoaded && model.whenLoaded !== 'null' && model.whenLoaded !== 'NULL'
+                                     ? whenLoadedToText(model.whenLoaded) :
                                        !!model.epoch && model.epoch !== 'null' && model.epoch !== 'NULL'
-									   ? 'запись в бд создана '+epochToText(model.epoch)
-									   : '' // model.release_timestamp
+                                       ? 'запись в бд создана '+epochToText(model.epoch)
+                                       : '' // model.release_timestamp
                         duration: durationToText(parseInt(model.duration))
 
-						onClicked: S.State.goToVideo(S.State.playlistId, model.id)
-					}
-				}
-			}
-			Column {
-				id: videoPreviewItemByLineColumnId
-				Layout.fillWidth: true
+                        onClicked: S.State.goToVideo(S.State.playlistId, model.id)
+                    }
+                }
+            }
+            Column {
+                id: videoPreviewItemByLineColumnId
+                Layout.fillWidth: true
 
-				rightPadding: 9
-				leftPadding: 9
+                rightPadding: 9
+                leftPadding: 9
 
-				spacing: 16
+                spacing: 16
 
-				Repeater {
-					model: S.State.isListMode && S.State.playlistVideos
+                Repeater {
+                    model: S.State.isListMode && S.State.playlistVideos
                     VideoPreviewItemByLine {
-						width: rootId.width - 9 * 2
-						Binding on imagePreviewSource {
-							value: model.imagePreviewSource
-							when : !!model.imagePreviewSource
-						}
-						name: model.name //"Укрепление рубля / \nЗакрытие ядерного ..."
-						channelName: model.playlist // "aftershock.news"
-						viewCount: model.viewCount // "25 тыс. просмотров"
-						duration: durationToText(parseInt(model.duration))
-						videoNumber: index + 1
+                        width: rootId.width - 9 * 2
+                        Binding on imagePreviewSource {
+                            value: model.imagePreviewSource
+                            when : !!model.imagePreviewSource
+                        }
+                        name: model.name //"Укрепление рубля / \nЗакрытие ядерного ..."
+                        channelName: model.playlist // "aftershock.news"
+                        viewCount: model.viewCount // "25 тыс. просмотров"
+                        duration: durationToText(parseInt(model.duration))
+                        videoNumber: index + 1
 //                            function epochToText(ep){
 //                                var date = new Date(ep * 1000)
 //                                var s = '' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
@@ -232,12 +201,15 @@ FocusScope {
 //                                           : '' // model.release_timestamp
 
 
-						onClicked: S.State.goToVideo(S.State.playlistId, model.id)
-					}
-				}
-			}
-		}
-	}
+                        onClicked: S.State.goToVideo(S.State.playlistId, model.id)
+                    }
+                }
+            }
+        }
+
+    }
+
+
     function durationToText(durSec){
         //print('durSec', durSec, typeof durSec)
         var h = Math.trunc(durSec / 3600)
