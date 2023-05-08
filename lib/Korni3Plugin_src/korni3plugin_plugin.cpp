@@ -13,7 +13,7 @@ void QMLExecPlugin::registerTypes(const char* uri)
     Q_ASSERT(uri == QLatin1String("Korni3Plugin"));
 
     //    qmlRegisterType<Korni3Api>(uri, 1, 0, "Korni3Api");
-    qmlRegisterSingletonType<Korni3Api>(uri, 1, 0, "Korni3Api", &Korni3Api::qmlInstance);
+    //    qmlRegisterSingletonType<Korni3Api>(uri, 1, 0, "Korni3Api", &Korni3Api::qmlInstance);
 
     // Korni3ApiProcesshttp://www.xargs.com/qml/process.html
     qmlRegisterType<Korni3ApiProcess>(uri, 1, 0, "Korni3ApiProcess");
