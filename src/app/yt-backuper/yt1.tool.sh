@@ -581,8 +581,8 @@ collectPlInfo() {
 	#yt-dlp -j --flat-playlist  $url | gzip --best > playlist.log.gz    	&
 	wait
 	
-	plId=$(cat playlist1.json | jq -r "[.playlist_id] | @csv" | head -n 1 | sed -s 's/"//g')
-	plName=$(cat playlist1.json | jq -r "[.playlist] | @csv" | head -n 1 | sed -s 's/"//g')
+	plId=$(cat playlist1.json | jq -r "[.playlist_id] | @csv" | head -n 1 | sed  's/"//g')
+	plName=$(cat playlist1.json | jq -r "[.playlist] | @csv" | head -n 1 | sed  's/"//g')
 	echo $plId > plId.txt
 	echo $plName > plName.txt
 	echo '1/4 OK playlist1.json'
@@ -699,7 +699,7 @@ saveMp4() {
 	# TODO empty size || --rm ||  --empty-size
 	count=$(find -size +32c -type f | grep '\.mp4$' | wc -l)
 	
-	find -size +32c -type f | grep '\.mp4$' | sed -s "s/'/\\\\\'/g" | xargs -I {} python3 -c "
+	find -size +32c -type f | grep '\.mp4$' | sed  "s/'/\\\\\'/g" | xargs -I {} python3 -c "
 #-*- coding: utf-8 -*-
 import json, sys, re, subprocess
 
