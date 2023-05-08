@@ -19,63 +19,22 @@ Item {
         spacing: Controls.Theme.spacing
 
         // BACK playlistS button
-        Rectangle {
-            width: 2 * Controls.Theme.margins + Controls.Theme.baseSize
-            height: 2 * Controls.Theme.margins + Controls.Theme.baseSize
-            Layout.leftMargin: Controls.Theme.margins
-            color: '#04112A'
-            function go(){
-                S.State.goToPlaylists(S.State.uploaderId)
-            }
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                hoverEnabled: true
-                Controls.ToolTip {
-                    text: qsTr('К плейлистам Автора ' ) + S.State.uploaderId
-                    visible: parent.containsMouse || playlistsIconId.hovered
-                }
-                onClicked: parent.go()
-            }
-            HoveredImage {
-                id: playlistsIconId
-                anchors.centerIn: parent
-                source: './icons/playlist-icon-40-1.svg'
-                width: Controls.Theme.iconSize
-                height: width
-                // source
-                onClicked: parent.go()
-            }
+        UpToolbarIconedButton {
+            tipText: qsTr('К плейлистам' ) + S.State.uploaderId
+            iconSource: './icons/peoples.1.png'
+            isEnabled: true
+            sizeFactor: 1.7
+            onGo: S.State.goToPlaylists(S.State.uploaderId)
         }
 
         // BACK playlist button
-        Rectangle {
-            width: 2 * Controls.Theme.margins + Controls.Theme.baseSize
-            height: 2 * Controls.Theme.margins + Controls.Theme.baseSize
-            Layout.leftMargin: Controls.Theme.margins
-            color: '#04112A'
-            function go(){
-                S.State.goToPlaylist(S.State.playlistId)
-            }
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                hoverEnabled: true
-                Controls.ToolTip {
-                    text: qsTr('К плейлисту ') + S.State.playlistId
-                    visible: parent.containsMouse || playlistIconId.hovered
-                }
-                onClicked: parent.go()
-            }
-            HoveredImage {
-                id: playlistIconId
-                anchors.centerIn: parent
-                source: './icons/playlist-icon-40-1.svg'
-                width: Controls.Theme.iconSize
-                height: width
-                // source
-                onClicked: parent.go()
-            }
+        UpToolbarIconedButton {
+            tipText: qsTr('К плейлисту ') +
+                     (S.State.playlistName!=='' ? ': '+S.State.playlistName
+                                                : '')
+            iconSource: './icons/playlist-icon-40-1.svg'
+            isEnabled: S.State.playlistId !== ''
+            onGo: S.State.goToPlaylist(S.State.playlistId, S.State.playlistName)
         }
 
         // Menu button
@@ -153,11 +112,13 @@ Item {
                 timeout: 3000
                 contentItem: Column {
                     Text {
-                        text: qsTr('Управление аккаунтом\nПользователь: abc')
+                        text: qsTr('Управление аккаунтом\nПользователь: TODO')
                         color: 'white'
                     }
                     Button {
+                        enabled: false // TODO
                         text: qsTr('запустить приложение')
+
                     }
                 }
                 background: Rectangle {

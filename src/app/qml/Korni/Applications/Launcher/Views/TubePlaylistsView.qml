@@ -1,6 +1,7 @@
 import QtQml 2.3
 import QtQuick 2.6
 import QtQuick.Controls 2.10 // Button
+import QtQuick.Layouts 1.3
 import '../Components' 1.0 as C
 import '../StateTube' 1.0 as S
 
@@ -13,6 +14,7 @@ Column {
     }
     C.SearchLine {
         id: searchLineId
+        enabled: false
     }
 
     ScrollView {
@@ -31,16 +33,22 @@ Column {
             Repeater {
                 model : S.State.playlists
 
-                Button {
-                    text: '' + model.uploader
-                    flat: true
-                    hoverEnabled: true
-                    highlighted: hovered || pressed
+                RowLayout {
+                    Button {
+                        text: model.name
+                        flat: true
+                        hoverEnabled: true
+                        highlighted: hovered || pressed
 
-                    font.pixelSize: 22
-                    //font.italic: true
-                    onClicked: {
-                        S.State.goToPlaylist(model.id)
+                        font.pixelSize: 22
+                        //font.italic: true
+                        onClicked: {
+                            S.State.goToPlaylist(model.id, model.name)
+                        }
+                    }
+                    Label {
+                        text: '('+model.uploader+')'
+                        font.pixelSize: 16
                     }
                 }
             }

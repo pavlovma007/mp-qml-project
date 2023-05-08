@@ -72,7 +72,8 @@ Item {
     }
 
     // ==============for playlist (many videos) ===========================
-    property string playlistId: 'promtech'
+    property string playlistId: ''
+    property string playlistName: ''
     //    property var playlist
     property alias playlistVideos: playlistVideosId
     JsonListModel {
@@ -94,19 +95,25 @@ Item {
     Korni3ApiProcess {
         id: processPlaylistId
         property string data
+
         property string plId: ''
+        property string plName: ''
+
         onStarted: data = ''
         onReadyRead: data += readAll()
         onFinished: {
             playlistVideosId.source = JSON.parse(data)
             playlistId = plId
+            playlistName = plName
             viewName = 'playlist'
         }
     }
-    function goToPlaylist(plId){
+    function goToPlaylist(plId, name){
+        name = name || ''
         playStateIn = 2 // pause
         if(playlistId !== plId ){
             processPlaylistId.plId = plId
+            processPlaylistId.plName = name
             processPlaylistId.start('./yt-backend/yt-playlist.py', [plId] )
             processVideosId.start('./yt-backend/yt-videos.py', [plId] )
         } else

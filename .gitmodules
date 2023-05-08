@@ -1,10 +1,10 @@
 [submodule "lib/industrial-controls"]
 	path = lib/industrial-controls
-	url = git@github.com:pavlovma007/industrial-controls.git
+	url = https://github.com/pavlovma007/industrial-controls.git
 	branch = develop
 [submodule "lib/industrial-indicators"]
 	path = lib/industrial-indicators
-	url = git@github.com:pavlovma007/industrial-indicators.git
+	url = https://github.com/pavlovma007/industrial-indicators.git
 [submodule "lib/sqlite-editor-qtqml"]
 	path = lib/sqlite-editor-qtqml
 	url = git@github.com:ndesai/sqlite-editor-qtqml.git
@@ -22,7 +22,7 @@
 	url = https://invent.kde.org/maui/mauikit.git
 [submodule "lib/qsyncable"]
 	path = lib/qsyncable
-	url = git@github.com:pavlovma007/qsyncable.git
+	url = https://github.com/pavlovma007/qsyncable.git
 [submodule "lib/QMLExif_plugin"]
 	path = lib/QMLExif_plugin
 	url = git@github.com:Match-Yang/QMLExif.git

@@ -41,6 +41,7 @@ Column {
 
     C.SearchLine {
         id: searchLineId
+        enabled: false // TODO
 
         onSearch: function(text){
             print('search not implemented:', text)
